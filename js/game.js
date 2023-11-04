@@ -8,7 +8,7 @@ function init(){
 
     console.log('My Character is', world.character)
 }
-
+//wenn Taste gedrückt wird --> Variable auf Right geändert
 window.addEventListener('keydown', (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = true;

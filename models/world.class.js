@@ -21,6 +21,7 @@ class World {
            this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) ){
                 this.character.hit();
+                this.statusBar.setPercentage(this.character.energy)
             }
            }) 
         }, 200);
@@ -38,13 +39,18 @@ class World {
 
         //dann werden alle Objekte gezeichnet
         this.addObjectsToMap(this.level.backgroundObjects);
+
+        this.ctx.translate(-this.camera_x, 0); //back: damit StatusBar fest an einem Ort bleibt
+        // ------- space for fixed objects ----------
         this.addToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0) //forward: damit der Rest wieder dynamisch gezeichnet wird
+
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
 
         //anschließend wird die Kamera wieder zurückgesetzt
-        this.ctx.translate(-this.camera_x, 0)
+        this.ctx.translate(-this.camera_x, 0);
 
 
         //draw-Methode wird sooft wiederholt wie es die Grafikkarte zulässt

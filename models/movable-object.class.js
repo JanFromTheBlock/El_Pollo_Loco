@@ -17,8 +17,13 @@ class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        //solange Pepe höher als 155px ist, ist er in der Luft
+        //wenn throwable object dann müssen die nicht aboveground sein
+        if (this instanceof ThrowableObject) {
+            return true;
+        }else{
+             //solange Pepe höher als 155px ist, ist er in der Luft
         return this.y < 155;
+        }
     }
 
    

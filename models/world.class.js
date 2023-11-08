@@ -6,6 +6,7 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
+    throwableObjects = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -13,18 +14,30 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
+    }
+
+    run(){
+        setInterval(() => {
+            this.checkCollisions();
+            this.checkThrowableObjects();
+        }, 200);
+    }
+
+    checkThrowableObjects(){
+        if (this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.throwableObjects.push(bottle);
+        }
     }
 
     checkCollisions(){
-        setInterval(() => {
-           this.level.enemies.forEach((enemy) => {
+        this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) ){
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy)
             }
            }) 
-        }, 200);
     }
 
     setWorld() {
@@ -47,6 +60,7 @@ class World {
 
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.throwableObjects);
         this.addToMap(this.character);
 
         //anschließend wird die Kamera wieder zurückgesetzt

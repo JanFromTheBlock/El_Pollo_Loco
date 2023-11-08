@@ -5,6 +5,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    statusBar = new StatusBar();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -37,6 +38,7 @@ class World {
 
         //dann werden alle Objekte gezeichnet
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.addToMap(this.statusBar);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);

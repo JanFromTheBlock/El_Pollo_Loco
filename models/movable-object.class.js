@@ -22,16 +22,6 @@ class MovableObject extends DrawableObject {
     }
 
    
-    drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken) {
-            //Viereck um jedes Objekt zeichnen um Kollisionen zu detektieren
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
-    }
     //character.isColliding(chicken) detektiert pb der Charakter mit dem chicken zusammenstößt, indem geschaut wird, ob der Rahmen der beiden Elemente überkreuzt
     isColliding(mo) {
         return this.x + this.width > mo.x &&

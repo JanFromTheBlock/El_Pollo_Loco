@@ -7,6 +7,7 @@ class World {
     camera_x = 0;
     statusBar = new StatusBar();
     throwableObjects = [];
+    bottles = 5
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -25,9 +26,10 @@ class World {
     }
 
     checkThrowableObjects(){
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.bottles > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.bottles--;
         }
     }
 

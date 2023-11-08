@@ -1,11 +1,4 @@
-class MovableObject {
-    x = 120;
-    y = 280;
-    img;
-    height = 150;
-    width = 100;
-    imageCache = {};
-    currentImage = 0;
+class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -28,9 +21,7 @@ class MovableObject {
         return this.y < 155;
     }
 
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
+   
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken) {
             //Viereck um jedes Objekt zeichnen um Kollisionen zu detektieren
@@ -67,20 +58,6 @@ class MovableObject {
 
     isDead(){
         return this.energy == 0;
-    }
-
-    loadImage(path) {
-        this.img = new Image();    //image ist von javascript voreingestellt und beschreibt ein img-tag
-        this.img.src = path;
-    }
-
-    //lade mehrere Bilder aus einem Array
-    loadImages(array) {
-        array.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
     }
 
     //Walk animation

@@ -7,7 +7,8 @@ class World {
     camera_x = 0;
     statusBar = new StatusBar();
     throwableObjects = [];
-    collectedBottles = 5
+    collectedBottles = 0;
+    positionOfBottle = -1;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -23,7 +24,7 @@ class World {
             this.checkCollisions(this.level.enemies, 'enemy');
             this.checkCollisions(this.level.bottles, 'bottle');
             this.checkThrowableObjects();
-        }, 200);
+        }, 100);
     }
 
     checkThrowableObjects() {
@@ -36,16 +37,24 @@ class World {
 
     checkCollisions(array, objectType) {
         array.forEach((o) => {
+            if(objectType == 'bottle'){
+                //wenn bottles gecheckt werden, wird Varaible immer um eins erhöht um die Position rauszufinden, an der später im array gelöscht werden soll bei einer Kollision
+                this.positionOfBottle++;
+            }
             if (this.character.isColliding(o)) {
                 if (objectType == 'enemy') {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
                 } if(objectType == 'bottle'){
+                    //Anzahl an Flaschen zum werfen wird um eins erhöht
                     this.collectedBottles++; 
-                    console.log('funktioniert')
+                    //Variable gibt die Position an an der im array die bottle gelöscht werden soll
+                    array.splice(this.positionOfBottle, 1);
                 }
             }
         })
+        //wenn Funktion einmal komplett durhclaufen wurde, wird variable wieder auf -1 gesetzt
+        this.positionOfBottle = -1;
     }
 
     setWorld() {

@@ -18,14 +18,15 @@ class World {
         this.run();
     }
 
-    run(){
+    run() {
         setInterval(() => {
-            this.checkCollisions();
+            this.checkCollisions(this.level.enemies, 'enemy');
+            this.checkCollisions(this.level.bottles, 'bottle');
             this.checkThrowableObjects();
         }, 200);
     }
 
-    checkThrowableObjects(){
+    checkThrowableObjects() {
         if (this.keyboard.D && this.collectedBottles > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
@@ -33,13 +34,18 @@ class World {
         }
     }
 
-    checkCollisions(){
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) ){
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy)
+    checkCollisions(array, objectType) {
+        array.forEach((o) => {
+            if (this.character.isColliding(o)) {
+                if (objectType == 'enemy') {
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.energy);
+                } if(objectType == 'bottle'){
+                    this.collectedBottles++; 
+                    console.log('funktioniert')
+                }
             }
-           }) 
+        })
     }
 
     setWorld() {
@@ -59,7 +65,7 @@ class World {
         this.addToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0) //forward: damit der Rest wieder dynamisch gezeichnet wird
 
-        this.addObjectsToMap (this.level.clouds);
+        this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);

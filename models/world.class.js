@@ -7,7 +7,7 @@ class World {
     camera_x = 0;
     statusBar = new StatusBar();
     throwableObjects = [];
-    bottles = 5
+    collectedBottles = 5
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -26,10 +26,10 @@ class World {
     }
 
     checkThrowableObjects(){
-        if (this.keyboard.D && this.bottles > 0) {
+        if (this.keyboard.D && this.collectedBottles > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
-            this.bottles--;
+            this.collectedBottles--;
         }
     }
 
@@ -51,7 +51,6 @@ class World {
 
         //Kamera wird um Betrag camera_x zur Seite verschoben
         this.ctx.translate(this.camera_x, 0)
-
         //dann werden alle Objekte gezeichnet
         this.addObjectsToMap(this.level.backgroundObjects);
 
@@ -60,7 +59,8 @@ class World {
         this.addToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0) //forward: damit der Rest wieder dynamisch gezeichnet wird
 
-        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap (this.level.clouds);
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addToMap(this.character);

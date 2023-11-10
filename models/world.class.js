@@ -7,6 +7,7 @@ class World {
     camera_x = 0;
     healthBar = new HealthBar();
     bottleBar = new BottleBar();
+    coinBar = new CoinBar();
     throwableObjects = [];
     positionOfArray = -1;
 
@@ -55,6 +56,8 @@ class World {
                     //Variable gibt die Position an an der im array die bottle gelöscht werden soll
                     array.splice(this.positionOfArray, 1);
                 }if(objectType == 'coin'){
+                    this.coinBar.collectedCoins++
+                    this.coinBar.setAmountOfCoins(this.coinBar.collectedCoins);
                     array.splice(this.positionOfArray, 1);
                 }
             }
@@ -79,6 +82,7 @@ class World {
         // ------- space for fixed objects ----------
         this.addToMap(this.healthBar);
         this.addToMap(this.bottleBar);
+        this.addToMap(this.coinBar);
         this.ctx.translate(this.camera_x, 0) //forward: damit der Rest wieder dynamisch gezeichnet wird
 
         this.addObjectsToMap(this.level.clouds);

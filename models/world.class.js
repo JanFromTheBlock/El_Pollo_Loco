@@ -25,7 +25,8 @@ class World {
         setInterval(() => {
             this.checkCollisions(this.level.enemies, 'enemy');
             this.checkCollisions(this.level.bottles, 'bottle');
-            this.checkCollisions(this.level.coins, 'coin')
+            this.checkCollisions(this.level.coins, 'coin');
+            this.checkCollisionsWithThrownBottles(this.throwableObjects);
             this.checkThrowableObjects();
         }, 100);
     }
@@ -37,6 +38,14 @@ class World {
             this.bottleBar.collectedBottles --;
             this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
         }
+    }
+
+    checkCollisionsWithThrownBottles(array){
+        array.forEach((o) => {
+            if (this.level.enemies['3'].isColliding(o) || o.y >  335) {
+                array.splice(o, 1);
+            }
+        })
     }
 
     checkCollisions(array, objectType) {

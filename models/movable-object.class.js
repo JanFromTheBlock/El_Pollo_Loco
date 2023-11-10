@@ -27,7 +27,7 @@ class MovableObject extends DrawableObject {
     }
 
    
-    //character.isColliding(chicken) detektiert pb der Charakter mit dem chicken zusammenstößt, indem geschaut wird, ob der Rahmen der beiden Elemente überkreuzt
+    //character.isColliding(chicken) detektiert pb der Charakter mit dem gewähltem Objekt zusammenstößt, indem geschaut wird, ob der Rahmen der beiden Elemente überkreuzt
     isColliding(mo) {
         return this.x + this.width > mo.x &&
                 this.y + this.height > mo.y &&

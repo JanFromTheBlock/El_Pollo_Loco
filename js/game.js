@@ -4,9 +4,7 @@ let keyboard = new Keyboard();
 
 function init(){
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard)
-
-    console.log('My Character is', world.character)
+    world = new World(canvas, keyboard);
 }
 //wenn Taste gedrückt wird --> Variable auf Right geändert
 window.addEventListener('keydown', (e) => {
@@ -28,7 +26,6 @@ window.addEventListener('keydown', (e) => {
     if (e.keyCode == 68) {
         keyboard.D = true;
     };
-    console.log(e)
 });
 
 window.addEventListener('keyup', (e) => {

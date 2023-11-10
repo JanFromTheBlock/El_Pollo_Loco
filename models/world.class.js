@@ -5,10 +5,11 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusBar = new StatusBar();
+    healthBar = new HealthBar();
+    bottleBar = new BottleBar();
     throwableObjects = [];
-    collectedBottles = 0;
     positionOfBottle = -1;
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -28,10 +29,11 @@ class World {
     }
 
     checkThrowableObjects() {
-        if (this.keyboard.D && this.collectedBottles > 0) {
+        if (this.keyboard.D && this.bottleBar.collectedBottles > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
-            this.collectedBottles--;
+            this.bottleBar.collectedBottles --;
+            this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
         }
     }
 
@@ -44,10 +46,11 @@ class World {
             if (this.character.isColliding(o)) {
                 if (objectType == 'enemy') {
                     this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
+                    this.healthBar.setPercentage(this.character.energy);
                 } if(objectType == 'bottle'){
-                    //Anzahl an Flaschen zum werfen wird um eins erhöht
-                    this.collectedBottles++; 
+                    //Anzahl an Flaschen zum werfen wird um eins erhöht und bar aktualisiert
+                    this.bottleBar.collectedBottles ++;
+                    this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
                     //Variable gibt die Position an an der im array die bottle gelöscht werden soll
                     array.splice(this.positionOfBottle, 1);
                 }
@@ -71,7 +74,8 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0); //back: damit StatusBar fest an einem Ort bleibt
         // ------- space for fixed objects ----------
-        this.addToMap(this.statusBar);
+        this.addToMap(this.healthBar);
+        this.addToMap(this.bottleBar);
         this.ctx.translate(this.camera_x, 0) //forward: damit der Rest wieder dynamisch gezeichnet wird
 
         this.addObjectsToMap(this.level.clouds);

@@ -1,4 +1,5 @@
 class ThrowableObject extends MovableObject{
+    collision = false;
   IMAGES_COLLIDING = [
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',
@@ -21,16 +22,24 @@ class ThrowableObject extends MovableObject{
         this.y = y;
         this.height = 60;
         this.width = 50;
-        this.throw(this.IMAGES_THROWING);
+        this.throw();
     }
 
 
-    throw(array){
+    throw(){
         this.speedY = 20;
         this.applyGravity();
             setInterval(() => {
-                this.playAnimation(array);
-                this.x += 20;
+               if (this.collision) {
+                   this.playAnimation(this.IMAGES_COLLIDING);
+                } else{
+                    this.playAnimation(this.IMAGES_THROWING);
+                }
+            }, 25);
+            setInterval(() => {
+                if (!this.collision) {
+                    this.x += 20;
+                }
             }, 25);
     }
 }

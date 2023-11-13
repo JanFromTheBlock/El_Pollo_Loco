@@ -42,8 +42,12 @@ class World {
 
     checkCollisionsWithThrownBottles(array){
         array.forEach((o) => {
+            let i = array.indexOf(o)
             if (this.level.enemies['3'].isColliding(o) || o.y >  335) {
-                array.splice(o, 1);
+                this.throwableObjects[i].collision = true;
+                setTimeout(() =>{
+                    array.splice(i, 1);
+                }, 200)
             }
         })
     }

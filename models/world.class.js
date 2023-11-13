@@ -8,6 +8,7 @@ class World {
     healthBar = new HealthBar();
     bottleBar = new BottleBar();
     coinBar = new CoinBar();
+    endbossBar = new EndbossBar();
     throwableObjects = [];
     positionOfArray = -1;
 
@@ -96,6 +97,7 @@ class World {
         this.addToMap(this.healthBar);
         this.addToMap(this.bottleBar);
         this.addToMap(this.coinBar);
+        this.addToMap(this.endbossBar);
         this.ctx.translate(this.camera_x, 0) //forward: damit der Rest wieder dynamisch gezeichnet wird
 
         this.addObjectsToMap(this.level.clouds);

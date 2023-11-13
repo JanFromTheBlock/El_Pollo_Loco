@@ -1,5 +1,6 @@
 class ThrowableObject extends MovableObject{
     collision = false;
+    alreadyHit = false;
   IMAGES_COLLIDING = [
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',

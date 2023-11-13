@@ -36,26 +36,32 @@ class World {
         if (this.keyboard.D && this.bottleBar.collectedBottles > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
-            this.bottleBar.collectedBottles --;
+            this.bottleBar.collectedBottles--;
             this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
         }
     }
 
-    checkCollisionsWithThrownBottles(array){
+    checkCollisionsWithThrownBottles(array) {
         array.forEach((o) => {
-            let i = array.indexOf(o)
-            if (this.level.enemies['3'].isColliding(o) || o.y >  335) {
+            let i = array.indexOf(o);
+            if (this.level.enemies['3'].isColliding(o) || o.y > 335) {
                 this.throwableObjects[i].collision = true;
-                setTimeout(() =>{
+                setTimeout(() => {
                     array.splice(i, 1);
-                }, 200)
+                }, 0)
+                if (!this.throwableObjects[i].alreadeHit) {
+                    this.endbossBar.hit();
+                this.endbossBar.setPercentage(this.endbossBar.percentage);
+                this.throwableObjects[i].alreadeHit = true;
+                }
+                
             }
         })
     }
 
     checkCollisions(array, objectType) {
         array.forEach((o) => {
-            if(objectType == 'bottle' || objectType == 'coin'){
+            if (objectType == 'bottle' || objectType == 'coin') {
                 //wenn bottles gecheckt werden, wird Varaible immer um eins erhöht um die Position rauszufinden, an der später im array gelöscht werden soll bei einer Kollision
                 this.positionOfArray++;
             }
@@ -63,13 +69,13 @@ class World {
                 if (objectType == 'enemy') {
                     this.character.hit();
                     this.healthBar.setPercentage(this.character.energy);
-                } if(objectType == 'bottle'){
+                } if (objectType == 'bottle') {
                     //Anzahl an Flaschen zum werfen wird um eins erhöht und bar aktualisiert
-                    this.bottleBar.collectedBottles ++;
+                    this.bottleBar.collectedBottles++;
                     this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
                     //Variable gibt die Position an an der im array die bottle gelöscht werden soll
                     array.splice(this.positionOfArray, 1);
-                }if(objectType == 'coin'){
+                } if (objectType == 'coin') {
                     this.coinBar.collectedCoins++
                     this.coinBar.setAmountOfCoins(this.coinBar.collectedCoins);
                     array.splice(this.positionOfArray, 1);

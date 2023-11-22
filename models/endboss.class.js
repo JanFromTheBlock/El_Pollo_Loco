@@ -4,6 +4,7 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 55;
+    speed = 0.3;
 
     IMAGES_STANDING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -51,17 +52,26 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (world.endbossBar.percentage == 0) {
                 this.playAnimation(this.IMAGES_DEAD);
+                this.speed = 0;
             } else {
                 if (this.endbossHurt) {
+                    this.speed = 0;
                     this.playAnimation(this.IMAGES_ATTACKING);
                     setTimeout(() => {
                         this.endbossHurt = false;
                         this.endbossRun = true;
-                    }, 2000);
+                        this.speed = 0.3;
+                    }, 1000);
                 } else {
                     if (world.camera_x < -2000 || this.endbossRun) {
                         this.playAnimation(this.IMAGES_WALKING);
-                    }else {
+                        if (!this.endbossHurt) {
+                            setInterval(() => {
+                                this.moveLeft();
+                            }, 1000 / 60);
+                        }
+
+                    } else {
                         this.playAnimation(this.IMAGES_STANDING);
                     }
                 }

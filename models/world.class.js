@@ -49,12 +49,13 @@ class World {
                 setTimeout(() => {
                     array.splice(i, 1);
                 }, 0)
-                if (!this.throwableObjects[i].alreadeHit) {
+                if (!this.throwableObjects[i].alreadyHit) {
                     this.endbossBar.hit();
-                this.endbossBar.setPercentage(this.endbossBar.percentage);
-                this.throwableObjects[i].alreadeHit = true;
+                    this.endbossBar.setPercentage(this.endbossBar.percentage);
+                    this.throwableObjects[i].alreadyHit = true;
+                    this.level.enemies['3'].animate();
                 }
-                
+
             }
         })
     }

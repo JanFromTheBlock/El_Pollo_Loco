@@ -53,7 +53,7 @@ class World {
                     this.endbossBar.hit();
                     this.endbossBar.setPercentage(this.endbossBar.percentage);
                     this.throwableObjects[i].alreadyHit = true;
-                    this.level.enemies['3'].animate();
+                    this.level.enemies['3'].endbossHurt = true;;
                 }
 
             }

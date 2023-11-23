@@ -68,8 +68,13 @@ class World {
             }
             if (this.character.isColliding(o)) {
                 if (objectType == 'enemy') {
-                    this.character.hit();
+                    if(o instanceof Endboss){
+                        this.character.energy = 0;
+                        this.healthBar.setPercentage(this.character.energy);
+                    }else{
+                        this.character.hit();
                     this.healthBar.setPercentage(this.character.energy);
+                    }
                 } if (objectType == 'bottle') {
                     //Anzahl an Flaschen zum werfen wird um eins erhöht und bar aktualisiert
                     this.bottleBar.collectedBottles++;

@@ -16,16 +16,16 @@ class DrawableObject{
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-    drawFrame(ctx) {
-        if (this instanceof Character) {
-            //Viereck um jedes Objekt zeichnen um Kollisionen zu detektieren
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y + 120, this.width, this.height -120);
-            ctx.stroke();
-        }
-    }
+    //drawFrame(ctx) {
+    //    if (this instanceof Character) {
+    //        //Viereck um jedes Objekt zeichnen um Kollisionen zu detektieren
+    //        ctx.beginPath();
+    //        ctx.lineWidth = '5';
+    //        ctx.strokeStyle = 'blue';
+    //        ctx.rect(this.x, this.y + 120, this.width, this.height -120);
+    //        ctx.stroke();
+    //    }
+    //}
 
        //lade mehrere Bilder aus einem Array
        loadImages(array) {

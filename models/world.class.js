@@ -10,7 +10,12 @@ class World {
     coinBar = new CoinBar();
     endbossBar = new EndbossBar();
     throwableObjects = [];
+    IntervalIds = [];
     positionOfArray = -1;
+    endboss_hurt_sound = new Audio('audio/chicken_hurt.mp3');
+    collect_bottle_sound = new Audio('audio/collect_bottle.mp3');
+    collect_coin_sound = new Audio('audio/collect_coins.mp3');
+    game_over_sound = new Audio('audio/game_over.mp3');
 
 
     constructor(canvas, keyboard) {
@@ -24,6 +29,10 @@ class World {
 
     run() {
         setInterval(() => {
+            this.endboss_hurt_sound.pause();
+            this.collect_bottle_sound.pause();
+            this.collect_coin_sound.pause();
+            this.game_over_sound.pause();
             this.checkCollisions(this.level.enemies, 'enemy');
             this.checkCollisions(this.level.bottles, 'bottle');
             this.checkCollisions(this.level.coins, 'coin');
@@ -46,6 +55,7 @@ class World {
             let i = array.indexOf(o);
             if (this.level.enemies['3'].isColliding(o) || o.y > 335) {
                 this.throwableObjects[i].collision = true;
+                this.endboss_hurt_sound.play();
                 setTimeout(() => {
                     array.splice(i, 1);
                 }, 0)
@@ -68,20 +78,22 @@ class World {
             }
             if (this.character.isColliding(o)) {
                 if (objectType == 'enemy') {
-                    if(o instanceof Endboss){
+                    if (o instanceof Endboss) {
                         this.character.energy = 0;
                         this.healthBar.setPercentage(this.character.energy);
-                    }else{
+                    } else {
                         this.character.hit();
-                    this.healthBar.setPercentage(this.character.energy);
+                        this.healthBar.setPercentage(this.character.energy);
                     }
                 } if (objectType == 'bottle') {
                     //Anzahl an Flaschen zum werfen wird um eins erhöht und bar aktualisiert
+                    this.collect_bottle_sound.play();
                     this.bottleBar.collectedBottles++;
                     this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
                     //Variable gibt die Position an an der im array die bottle gelöscht werden soll
                     array.splice(this.positionOfArray, 1);
                 } if (objectType == 'coin') {
+                    this.collect_coin_sound.play();
                     this.coinBar.collectedCoins++
                     this.coinBar.setAmountOfCoins(this.coinBar.collectedCoins);
                     array.splice(this.positionOfArray, 1);
@@ -94,6 +106,8 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.character.animate();
+        this.level.enemies['3'].animate();
     }
 
     draw() {
@@ -164,6 +178,16 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+    stopGame() {
+        this.IntervalIds.forEach(clearInterval);
+        this.game_over_sound.play();
+    }
+
+    setStoppableInterval(fn, time){
+        let id = setInterval(fn, time);
+        this.IntervalIds.push(id);
     }
 
 }

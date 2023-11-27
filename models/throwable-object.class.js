@@ -1,7 +1,7 @@
-class ThrowableObject extends MovableObject{
+class ThrowableObject extends MovableObject {
     collision = false;
     alreadyHit = false;
-  IMAGES_COLLIDING = [
+    IMAGES_COLLIDING = [
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png',
@@ -15,7 +15,9 @@ class ThrowableObject extends MovableObject{
         'img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png',
     ];
-    constructor(x, y){
+
+    bottle_smashing_sound = new Audio('audio/bottle_smash.mp3');
+    constructor(x, y) {
         super().loadImage(this.IMAGES_THROWING[0]);
         this.loadImages(this.IMAGES_THROWING);
         this.loadImages(this.IMAGES_COLLIDING);
@@ -27,20 +29,22 @@ class ThrowableObject extends MovableObject{
     }
 
 
-    throw(){
+    throw() {
         this.speedY = 20;
         this.applyGravity();
-            setInterval(() => {
-               if (this.collision) {
-                   this.playAnimation(this.IMAGES_COLLIDING);
-                } else{
-                    this.playAnimation(this.IMAGES_THROWING);
-                }
-            }, 25);
-            setInterval(() => {
-                if (!this.collision) {
-                    this.x += 20;
-                }
-            }, 25);
+        setInterval(() => {
+            this.bottle_smashing_sound.pause();
+            if (this.collision) {
+                this.playAnimation(this.IMAGES_COLLIDING);
+            } else {
+                this.playAnimation(this.IMAGES_THROWING);
+                this.bottle_smashing_sound.play();
+            }
+        }, 25);
+        setInterval(() => {
+            if (!this.collision) {
+                this.x += 20;
+            }
+        }, 25);
     }
 }

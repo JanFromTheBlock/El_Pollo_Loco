@@ -45,7 +45,6 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACKING);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 2500;
-        this.animate();
     }
 
     animate() {
@@ -53,6 +52,7 @@ class Endboss extends MovableObject {
             if (world.endbossBar.percentage == 0) {
                 this.playAnimation(this.IMAGES_DEAD);
                 this.speed = 0;
+                world.stopGame();
             } else {
                 if (this.endbossHurt) {
                     this.speed = 0;

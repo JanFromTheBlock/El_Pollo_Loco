@@ -37,6 +37,9 @@ class Character extends MovableObject {
     ];
     world;
     walking_sound = new Audio('audio/running.mp3')
+    character_hurt_sound = new Audio('audio/character_hurt.mp3');
+    jumping_sound = new Audio('audio/jump.mp3');
+
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -45,16 +48,46 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
-        this.animate();
     }
 
     animate() {
+        this.world.setStoppableInterval(this.moveCharacter.bind(this), 1000 / 60);
+        this.world.setStoppableInterval(this.animateCharacter.bind(this), 50);
+    }
 
-        setInterval(() => {
+    animateCharacter(){
+                 //walking-musik wird kurz pausiert und läuft nur weiter wenn die Tasten wieterhin gedrückt werdne
+                 this.walking_sound.pause();
+                 this.character_hurt_sound.pause();
+                 this.jumping_sound.pause();
+     
+                 if (this.isDead()) {
+                     this.playAnimation(this.IMAGES_DEAD);
+                     this.world.stopGame();
+     
+     
+                 } else if (this.isHurt()) {
+                     this.playAnimation(this.IMAGES_HURT); //wenn is Hurt true ist, wird Velretze Bilder angezeigt
+                     this.character_hurt_sound.play();
+                 } else if (this.isAboveGround()) {
+                     this.playAnimation(this.IMAGES_JUMPING);  //wenn Pepe in der Luft ist wird Jumping Animation angezeigt
+                     this.jumping_sound.play();
+                 } else {
+                     //Animation wird abgespielt wenn Rechts oder Links true ist und Pepe nicht above Ground ist
+                     if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                         this.playAnimation(this.IMAGES_WALKING);
+                         //walking-musik wird abgespielt
+                         this.walking_sound.play();
+                     }
+                 }
+    }
+
+    moveCharacter() {
+        if (this.world) {
             //Geschwindigkeiten für rechts und links laufen wird animiert
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-               this.moveRight();
-               this.otherDirection = false;
+                this.moveRight();
+                this.otherDirection = false;
             };
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
@@ -62,34 +95,12 @@ class Character extends MovableObject {
             }
 
             //wenn space-taste gedrückt wird und PEpe auf dem Boden ist, wird initial beschleunigt nach oben
-            if(this.world.keyboard.SPACE && !this.isAboveGround()) {
+            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
             }
 
             //kamera wird immer um die gleiche Pixelmenge wie der charakter bewegt aber in die andere Richtung und soll insgesamt immer 100pixel rechts vom charakter sein, damit dieser nicht direkt am Rand ist
             this.world.camera_x = -this.x + 100;
-        }, 1000 / 60)
-
-        setInterval(() => {
-            //walking-musik wird kurz pausiert und läuft nur weiter wenn die Tasten wieterhin gedrückt werdne
-            this.walking_sound.pause();
-
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-
-                 
-            }else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT); //wenn is Hurt true ist, wird Velretze Bilder angezeigt
-            }else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);  //wenn Pepe in der Luft ist wird Jumping Animation angezeigt
-            } else {
-                //Animation wird abgespielt wenn Rechts oder Links true ist und Pepe nicht above Ground ist
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                    //walking-musik wird abgespielt
-                    this.walking_sound.play();
-                }
-            }
-        }, 50)
+        }
     }
 }

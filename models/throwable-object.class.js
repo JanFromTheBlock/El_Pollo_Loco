@@ -36,26 +36,37 @@ class ThrowableObject extends MovableObject {
         this.world.setStoppableInterval(this.moveBottle.bind(this), 25);
     }
 
-    moveBottle(){
+    moveBottle() {
         if (!this.collision) {
             this.x += 20;
         }
     }
 
-    animateBottle(){
-        this.bottle_smashing_sound.pause();
+    animateBottle() {
+        this.pauseSound();
         if (this.collision) {
-            this.playAnimation(this.IMAGES_COLLIDING);
+            this.bottleIsColliding();
         } else {
-            this.playAnimation(this.IMAGES_THROWING);
-            if (this.bottle_smashing_sound !== undefined) {
-                this.bottle_smashing_sound.play().then(_ => {
-                    this.bottle_smashing_sound.pause();
-                })
+            this.bottleIsFlying();
+        }
+    }
+
+    pauseSound(){
+        this.bottle_smashing_sound.pause();
+    }
+
+    bottleIsFlying() {
+        this.playAnimation(this.IMAGES_THROWING);
+        if (this.bottle_smashing_sound !== undefined) {
+            this.bottle_smashing_sound.play().then(_ => {
+                this.bottle_smashing_sound.pause();
+            })
                 .catch(error => {
                 })
-            }
-            
         }
+    }
+
+    bottleIsColliding() {
+        this.playAnimation(this.IMAGES_COLLIDING);
     }
 }

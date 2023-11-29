@@ -48,34 +48,53 @@ class Endboss extends MovableObject {
         this.x = 2500;
     }
 
-    animate() {this.world.setStoppableInterval(this.animateEndboss.bind(this), 200); }
+    animate() { this.world.setStoppableInterval(this.animateEndboss.bind(this), 200); }
 
-    animateEndboss(){
-            if (world.endbossBar.percentage == 0) {
-                this.playAnimation(this.IMAGES_DEAD);
-                this.speed = 0;
-                world.stopGame();
+    animateEndboss() {
+        if (world.endbossBar.percentage == 0) {
+            this.endbossIsDying();
+        } else {
+            if (this.endbossHurt) {
+                this.endbossIsHurt();
             } else {
-                if (this.endbossHurt) {
-                    this.speed = 0;
-                    this.playAnimation(this.IMAGES_ATTACKING);
-                    setTimeout(() => {
-                        this.endbossHurt = false;
-                        this.endbossRun = true;
-                        this.speed = 0.3;
-                    }, 1000);
+                if (world.camera_x < -2000 || this.endbossRun) {
+                    this.endbossIsRunning();
                 } else {
-                    if (world.camera_x < -2000 || this.endbossRun) {
-                        this.playAnimation(this.IMAGES_WALKING);
-                        if (!this.endbossHurt) {
-                            this.world.setStoppableInterval(this.moveLeft.bind(this), 1000 / 60); 
-                        }
-
-                    } else {
-                        this.playAnimation(this.IMAGES_STANDING);
-                    }
+                    this.endbossIsWaiting();
                 }
             }
+        }
+    }
+
+    endbossIsWaiting(){
+        this.playAnimation(this.IMAGES_STANDING);
+    }
+
+    endbossIsRunning() {
+        this.playAnimation(this.IMAGES_WALKING);
+        if (!this.endbossHurt) {
+            this.world.setStoppableInterval(this.moveLeft.bind(this), 1000 / 60);
+        }
+    }
+
+    endbossIsHurt() {
+        this.speed = 0;
+        this.playAnimation(this.IMAGES_ATTACKING);
+        this.endbossIsAttacking();
+    }
+
+    endbossIsAttacking(){
+        setTimeout(() => {
+            this.endbossHurt = false;
+            this.endbossRun = true;
+            this.speed = 0.3;
+        }, 1000);
+    }
+
+    endbossIsDying() {
+        this.playAnimation(this.IMAGES_DEAD);
+        this.speed = 0;
+        world.stopGame();
     }
 
 

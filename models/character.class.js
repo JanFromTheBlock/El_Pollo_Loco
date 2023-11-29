@@ -62,17 +62,17 @@ class Character extends MovableObject {
 
     checkSituationOfTheCharacterToAnimate() {
         if (this.isDead()) {
-            this.characterDies();
+            this.characterisDying();
         } else if (this.isHurt()) {
             this.characterIsHurt();
         } else if (this.isAboveGround()) {
-            this.characterJumps();
+            this.characterIsJumping();
         } else {
-            this.characterWalks();
+            this.characterIsWalking();
         }
     }
 
-    characterWalks() {
+    characterIsWalking() {
         //Animation wird abgespielt wenn Rechts oder Links true ist und Pepe nicht above Ground ist
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
             this.playAnimation(this.IMAGES_WALKING);
@@ -93,7 +93,7 @@ class Character extends MovableObject {
         this.character_hurt_sound.play();
     }
 
-    characterJumps() {
+    characterIsJumping() {
         this.playAnimation(this.IMAGES_JUMPING);  //wenn Pepe in der Luft ist wird Jumping Animation angezeigt
         if (this.jumping_sound.play !== undefined) {
             this.jumping_sound.play().then(_ => {
@@ -105,7 +105,7 @@ class Character extends MovableObject {
         this.jumping_sound.play();
     }
 
-    characterDies() {
+    characterisDying() {
         this.playAnimation(this.IMAGES_DEAD);
         this.world.stopGame();
     }

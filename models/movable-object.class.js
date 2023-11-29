@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
 
+
     applyGravity() {
         //wenn Pepe in der Luftist oder eine positive Geschwindigkeit nach oben hat durch drücken von PFeiltaste-UP --> wird Y-Koordinate durch Beschleunigung verändert
         setInterval(() => {

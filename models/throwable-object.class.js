@@ -25,26 +25,37 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.height = 60;
         this.width = 50;
-        this.throw();
+        world;
     }
 
 
     throw() {
         this.speedY = 20;
         this.applyGravity();
-        setInterval(() => {
-            this.bottle_smashing_sound.pause();
-            if (this.collision) {
-                this.playAnimation(this.IMAGES_COLLIDING);
-            } else {
-                this.playAnimation(this.IMAGES_THROWING);
-                this.bottle_smashing_sound.play();
+        this.world.setStoppableInterval(this.animateBottle.bind(this), 25);
+        this.world.setStoppableInterval(this.moveBottle.bind(this), 25);
+    }
+
+    moveBottle(){
+        if (!this.collision) {
+            this.x += 20;
+        }
+    }
+
+    animateBottle(){
+        this.bottle_smashing_sound.pause();
+        if (this.collision) {
+            this.playAnimation(this.IMAGES_COLLIDING);
+        } else {
+            this.playAnimation(this.IMAGES_THROWING);
+            if (this.bottle_smashing_sound !== undefined) {
+                this.bottle_smashing_sound.play().then(_ => {
+                    this.bottle_smashing_sound.pause();
+                })
+                .catch(error => {
+                })
             }
-        }, 25);
-        setInterval(() => {
-            if (!this.collision) {
-                this.x += 20;
-            }
-        }, 25);
+            
+        }
     }
 }

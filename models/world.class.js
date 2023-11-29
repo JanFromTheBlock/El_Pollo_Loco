@@ -28,8 +28,11 @@ class World {
     }
 
     run() {
-        setInterval(() => {
-            this.endboss_hurt_sound.pause();
+        this.setStoppableInterval(this.runWorld.bind(this), 100);
+    }
+
+    runWorld(){
+        this.endboss_hurt_sound.pause();
             this.collect_bottle_sound.pause();
             this.collect_coin_sound.pause();
             this.game_over_sound.pause();
@@ -38,13 +41,15 @@ class World {
             this.checkCollisions(this.level.coins, 'coin');
             this.checkCollisionsWithThrownBottles(this.throwableObjects);
             this.checkThrowableObjects();
-        }, 100);
     }
 
     checkThrowableObjects() {
         if (this.keyboard.D && this.bottleBar.collectedBottles > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            let i = this.throwableObjects.length - 1;
+            this.throwableObjects[i].world = this;
+            this.throwableObjects[i].throw();
             this.bottleBar.collectedBottles--;
             this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
         }
@@ -109,7 +114,7 @@ class World {
         this.character.animate();
         for (let index = 0; index < this.level.enemies.length; index++) {
             this.level.enemies[index].world = this;
-            this.level.enemies[index].animate();            
+            this.level.enemies[index].animate();
         }
     }
 
@@ -188,7 +193,7 @@ class World {
         this.game_over_sound.play();
     }
 
-    setStoppableInterval(fn, time){
+    setStoppableInterval(fn, time) {
         let id = setInterval(fn, time);
         this.IntervalIds.push(id);
     }

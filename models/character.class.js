@@ -78,6 +78,13 @@ class Character extends MovableObject {
                      this.character_hurt_sound.play();
                  } else if (this.isAboveGround()) {
                      this.playAnimation(this.IMAGES_JUMPING);  //wenn Pepe in der Luft ist wird Jumping Animation angezeigt
+                     if (this.jumping_sound.play !== undefined) {
+                        this.jumping_sound.play().then(_ => {
+                            this.jumping_sound.play.pause();
+                        })
+                        .catch(error => {
+                        })
+                    }
                      this.jumping_sound.play();
                  } else {
                      //Animation wird abgespielt wenn Rechts oder Links true ist und Pepe nicht above Ground ist

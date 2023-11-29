@@ -55,66 +55,93 @@ class Character extends MovableObject {
         this.world.setStoppableInterval(this.animateCharacter.bind(this), 50);
     }
 
-    animateCharacter(){
-                 //walking-musik wird kurz pausiert und läuft nur weiter wenn die Tasten wieterhin gedrückt werdne
-                 this.walking_sound.pause();
-                 this.character_hurt_sound.pause();
-                 this.jumping_sound.pause();
-     
-                 if (this.isDead()) {
-                     this.playAnimation(this.IMAGES_DEAD);
-                     this.world.stopGame();
-     
-     
-                 } else if (this.isHurt()) {
-                     this.playAnimation(this.IMAGES_HURT); //wenn is Hurt true ist, wird Velretze Bilder angezeigt
-                     if (this.character_hurt_sound.play !== undefined) {
-                        this.character_hurt_sound.play().then(_ => {
-                            this.character_hurt_sound.play.pause();
-                        })
-                        .catch(error => {
-                        })
-                    }
-                     this.character_hurt_sound.play();
-                 } else if (this.isAboveGround()) {
-                     this.playAnimation(this.IMAGES_JUMPING);  //wenn Pepe in der Luft ist wird Jumping Animation angezeigt
-                     if (this.jumping_sound.play !== undefined) {
-                        this.jumping_sound.play().then(_ => {
-                            this.jumping_sound.play.pause();
-                        })
-                        .catch(error => {
-                        })
-                    }
-                     this.jumping_sound.play();
-                 } else {
-                     //Animation wird abgespielt wenn Rechts oder Links true ist und Pepe nicht above Ground ist
-                     if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                         this.playAnimation(this.IMAGES_WALKING);
-                         //walking-musik wird abgespielt
-                         this.walking_sound.play();
-                     }
-                 }
+    animateCharacter() {
+        this.pauseSounds();
+        this.checkSituationOfTheCharacterToAnimate();
+    }
+
+    checkSituationOfTheCharacterToAnimate() {
+        if (this.isDead()) {
+            this.characterDies();
+        } else if (this.isHurt()) {
+            this.characterIsHurt();
+        } else if (this.isAboveGround()) {
+            this.characterJumps();
+        } else {
+            this.characterWalks();
+        }
+    }
+
+    characterWalks() {
+        //Animation wird abgespielt wenn Rechts oder Links true ist und Pepe nicht above Ground ist
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.IMAGES_WALKING);
+            //walking-musik wird abgespielt
+            this.walking_sound.play();
+        }
+    }
+
+    characterIsHurt() {
+        this.playAnimation(this.IMAGES_HURT); //wenn is Hurt true ist, wird Velretze Bilder angezeigt
+        if (this.character_hurt_sound.play !== undefined) {
+            this.character_hurt_sound.play().then(_ => {
+                this.character_hurt_sound.play.pause();
+            })
+                .catch(error => {
+                })
+        }
+        this.character_hurt_sound.play();
+    }
+
+    characterJumps() {
+        this.playAnimation(this.IMAGES_JUMPING);  //wenn Pepe in der Luft ist wird Jumping Animation angezeigt
+        if (this.jumping_sound.play !== undefined) {
+            this.jumping_sound.play().then(_ => {
+                this.jumping_sound.play.pause();
+            })
+                .catch(error => {
+                })
+        }
+        this.jumping_sound.play();
+    }
+
+    characterDies() {
+        this.playAnimation(this.IMAGES_DEAD);
+        this.world.stopGame();
+    }
+
+    pauseSounds() {
+        //walking-musik wird kurz pausiert und läuft nur weiter wenn die Tasten wieterhin gedrückt werdne
+        this.walking_sound.pause();
+        this.character_hurt_sound.pause();
+        this.jumping_sound.pause();
     }
 
     moveCharacter() {
         if (this.world) {
             //Geschwindigkeiten für rechts und links laufen wird animiert
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
+                this.moveCharacterRight();
             };
             if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
+                this.moveCharacterLeft();
             }
-
             //wenn space-taste gedrückt wird und PEpe auf dem Boden ist, wird initial beschleunigt nach oben
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
             }
-
             //kamera wird immer um die gleiche Pixelmenge wie der charakter bewegt aber in die andere Richtung und soll insgesamt immer 100pixel rechts vom charakter sein, damit dieser nicht direkt am Rand ist
             this.world.camera_x = -this.x + 100;
         }
+    }
+
+    moveCharacterRight() {
+        this.moveRight();
+        this.otherDirection = false;
+    }
+
+    moveCharacterLeft() {
+        this.moveLeft();
+        this.otherDirection = true;
     }
 }

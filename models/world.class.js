@@ -31,82 +31,138 @@ class World {
         this.setStoppableInterval(this.runWorld.bind(this), 100);
     }
 
-    runWorld(){
-        this.endboss_hurt_sound.pause();
-            this.collect_bottle_sound.pause();
-            this.collect_coin_sound.pause();
-            this.game_over_sound.pause();
-            this.checkCollisions(this.level.enemies, 'enemy');
-            this.checkCollisions(this.level.bottles, 'bottle');
-            this.checkCollisions(this.level.coins, 'coin');
-            this.checkCollisionsWithThrownBottles(this.throwableObjects);
-            this.checkThrowableObjects();
+    runWorld() {
+        this.pauseSounds();
+        this.checkAllCollisions();
     }
 
-    checkThrowableObjects() {
+    checkAllCollisions() {
+        this.checkCollisions(this.level.enemies, 'enemy');
+        this.checkCollisions(this.level.bottles, 'bottle');
+        this.checkCollisions(this.level.coins, 'coin');
+        this.checkCollisionsWithThrownBottles(this.throwableObjects);
+        this.checkThrowableObjectsAvailable();
+    }
+
+    pauseSounds() {
+        this.endboss_hurt_sound.pause();
+        this.collect_bottle_sound.pause();
+        this.collect_coin_sound.pause();
+        this.game_over_sound.pause();
+    }
+
+    checkThrowableObjectsAvailable() {
         if (this.keyboard.D && this.bottleBar.collectedBottles > 0) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObjects.push(bottle);
-            let i = this.throwableObjects.length - 1;
-            this.throwableObjects[i].world = this;
-            this.throwableObjects[i].throw();
-            this.bottleBar.collectedBottles--;
-            this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
+            this.initializeBottleThrow();
         }
+    }
+
+    initializeBottleThrow() {
+        this.AddBottleToThrowableObjects();
+        this.deleteBottleFromBottleBar();
+    }
+
+    deleteBottleFromBottleBar() {
+        this.bottleBar.collectedBottles--;
+        this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
+    }
+
+    AddBottleToThrowableObjects() {
+        let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+        this.throwableObjects.push(bottle);
+        let i = this.throwableObjects.length - 1;
+        this.throwableObjects[i].world = this;
+        this.throwableObjects[i].throw();
     }
 
     checkCollisionsWithThrownBottles(array) {
         array.forEach((o) => {
             let i = array.indexOf(o);
             if (this.level.enemies['3'].isColliding(o) || o.y > 335) {
-                this.throwableObjects[i].collision = true;
-                this.endboss_hurt_sound.play();
-                setTimeout(() => {
-                    array.splice(i, 1);
-                }, 0)
+                this.endbossIsGettingHurt(array, i);
                 if (!this.throwableObjects[i].alreadyHit) {
-                    this.endbossBar.hit();
-                    this.endbossBar.setPercentage(this.endbossBar.percentage);
-                    this.throwableObjects[i].alreadyHit = true;
-                    this.level.enemies['3'].endbossHurt = true;;
+                    this.reduceEndbossHealthBar(i);
                 }
 
             }
         })
     }
 
+    reduceEndbossHealthBar(i) {
+        this.endbossBar.hit();
+        this.endbossBar.setPercentage(this.endbossBar.percentage);
+        this.throwableObjects[i].alreadyHit = true;
+        this.level.enemies['3'].endbossHurt = true;;
+    }
+
+    endbossIsGettingHurt(array, i) {
+        this.throwableObjects[i].collision = true;
+        this.endboss_hurt_sound.play();
+        setTimeout(() => {
+            array.splice(i, 1);
+        }, 0)
+    }
+
     checkCollisions(array, objectType) {
         array.forEach((o) => {
             if (objectType == 'bottle' || objectType == 'coin') {
-                //wenn bottles gecheckt werden, wird Varaible immer um eins erhöht um die Position rauszufinden, an der später im array gelöscht werden soll bei einer Kollision
-                this.positionOfArray++;
+                this.identifyPositionofObjectInArray();
             }
             if (this.character.isColliding(o)) {
                 if (objectType == 'enemy') {
-                    if (o instanceof Endboss) {
-                        this.character.energy = 0;
-                        this.healthBar.setPercentage(this.character.energy);
-                    } else {
-                        this.character.hit();
-                        this.healthBar.setPercentage(this.character.energy);
-                    }
+                    this.characterRunsIntoEnemy(o);
                 } if (objectType == 'bottle') {
-                    //Anzahl an Flaschen zum werfen wird um eins erhöht und bar aktualisiert
-                    this.collect_bottle_sound.play();
-                    this.bottleBar.collectedBottles++;
-                    this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
-                    //Variable gibt die Position an an der im array die bottle gelöscht werden soll
-                    array.splice(this.positionOfArray, 1);
+                    this.characterCollectsBottle(array);
                 } if (objectType == 'coin') {
-                    this.collect_coin_sound.play();
-                    this.coinBar.collectedCoins++
-                    this.coinBar.setAmountOfCoins(this.coinBar.collectedCoins);
-                    array.splice(this.positionOfArray, 1);
+                    this.characterCollectsCoin(array);
                 }
             }
         })
-        //wenn Funktion einmal komplett durhclaufen wurde, wird variable wieder auf -1 gesetzt
-        this.positionOfArray = -1;
+       this.resetPositionIdentifyingVariable();
+    }
+
+    characterCollectsCoin(array) {
+        this.collect_coin_sound.play();
+        this.coinBar.collectedCoins++
+        this.coinBar.setAmountOfCoins(this.coinBar.collectedCoins);
+        array.splice(this.positionOfArray, 1);
+    }
+
+    characterCollectsBottle(array) {
+        //Anzahl an Flaschen zum werfen wird um eins erhöht und bar aktualisiert
+        this.collect_bottle_sound.play();
+        this.bottleBar.collectedBottles++;
+        this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
+        //Variable gibt die Position an an der im array die bottle gelöscht werden soll
+        array.splice(this.positionOfArray, 1);
+    }
+
+    characterRunsIntoEnemy(o) {
+        if (o instanceof Endboss) {
+            this.characterRunsIntoEndboss();
+        } else {
+            this.characterRunsIntoChicken();
+        }
+    }
+
+    characterRunsIntoChicken() {
+        this.character.hit();
+        this.healthBar.setPercentage(this.character.energy);
+    }
+
+    characterRunsIntoEndboss() {
+        this.character.energy = 0;
+        this.healthBar.setPercentage(this.character.energy);
+    }
+
+    resetPositionIdentifyingVariable(){
+         //wenn Funktion einmal komplett durhclaufen wurde, wird variable wieder auf -1 gesetzt
+         this.positionOfArray = -1;
+    }
+
+    identifyPositionofObjectInArray() {
+        //wenn bottles gecheckt werden, wird Varaible immer um eins erhöht um die Position rauszufinden, an der später im array gelöscht werden soll bei einer Kollision
+        this.positionOfArray++;
     }
 
     setWorld() {

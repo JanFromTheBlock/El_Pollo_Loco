@@ -107,7 +107,6 @@ class World {
     setWorld() {
         this.character.world = this;
         this.character.animate();
-        this.level.enemies['3'].animate();
         for (let index = 0; index < this.level.enemies.length; index++) {
             this.level.enemies[index].world = this;
             this.level.enemies[index].animate();            

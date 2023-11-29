@@ -48,8 +48,9 @@ class Endboss extends MovableObject {
         this.x = 2500;
     }
 
-    animate() {
-        setInterval(() => {
+    animate() {this.world.setStoppableInterval(this.animateEndboss.bind(this), 200); }
+
+    animateEndboss(){
             if (world.endbossBar.percentage == 0) {
                 this.playAnimation(this.IMAGES_DEAD);
                 this.speed = 0;
@@ -67,9 +68,7 @@ class Endboss extends MovableObject {
                     if (world.camera_x < -2000 || this.endbossRun) {
                         this.playAnimation(this.IMAGES_WALKING);
                         if (!this.endbossHurt) {
-                            setInterval(() => {
-                                this.moveLeft();
-                            }, 1000 / 60);
+                            this.world.setStoppableInterval(this.moveLeft.bind(this), 1000 / 60); 
                         }
 
                     } else {
@@ -77,8 +76,6 @@ class Endboss extends MovableObject {
                     }
                 }
             }
-
-        }, 200);
     }
 
 

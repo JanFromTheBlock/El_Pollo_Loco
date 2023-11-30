@@ -176,10 +176,10 @@ class World {
 
     draw() {
         this.resetCanvas();
-        this.drawAllFixedObjects();
         this.cameraFollowsCharacter();
         this.drawAllMovableObjects();
         this.resetPositionOfCamera();
+        this.drawAllFixedObjects();
         this.repeatDrawAsOftenAsPossible();
     }
 

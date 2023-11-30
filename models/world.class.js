@@ -118,7 +118,7 @@ class World {
                 }
             }
         })
-       this.resetPositionIdentifyingVariable();
+        this.resetPositionIdentifyingVariable();
     }
 
     characterCollectsCoin(array) {
@@ -155,9 +155,9 @@ class World {
         this.healthBar.setPercentage(this.character.energy);
     }
 
-    resetPositionIdentifyingVariable(){
-         //wenn Funktion einmal komplett durhclaufen wurde, wird variable wieder auf -1 gesetzt
-         this.positionOfArray = -1;
+    resetPositionIdentifyingVariable() {
+        //wenn Funktion einmal komplett durhclaufen wurde, wird variable wieder auf -1 gesetzt
+        this.positionOfArray = -1;
     }
 
     identifyPositionofObjectInArray() {
@@ -175,32 +175,27 @@ class World {
     }
 
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.resetCanvas();
+        this.drawAllFixedObjects();
+        this.cameraFollowsCharacter();
+        this.drawAllMovableObjects();
+        this.resetPositionOfCamera();
+        this.repeatDrawAsOftenAsPossible();
+    }
 
-        //Kamera wird um Betrag camera_x zur Seite verschoben
-        this.ctx.translate(this.camera_x, 0)
-        //dann werden alle Objekte gezeichnet
-        this.addObjectsToMap(this.level.backgroundObjects);
-
-        this.ctx.translate(-this.camera_x, 0); //back: damit StatusBar fest an einem Ort bleibt
-        // ------- space for fixed objects ----------
-        this.addToMap(this.healthBar);
-        this.addToMap(this.bottleBar);
-        this.addToMap(this.coinBar);
-        this.addToMap(this.endbossBar);
-        this.ctx.translate(this.camera_x, 0) //forward: damit der Rest wieder dynamisch gezeichnet wird
-
-        this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.bottles);
-        this.addObjectsToMap(this.level.coins)
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableObjects);
-        this.addToMap(this.character);
-
-        //anschließend wird die Kamera wieder zurückgesetzt
+    resetPositionOfCamera() {
         this.ctx.translate(-this.camera_x, 0);
+    }
 
+    cameraFollowsCharacter() {
+        this.ctx.translate(this.camera_x, 0);
+    }
 
+    resetCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    repeatDrawAsOftenAsPossible() {
         //draw-Methode wird sooft wiederholt wie es die Grafikkarte zulässt
         //Die Funktion wird asynchron ausgeführt und startet erst wenn alles vorab gezeichnet wurde.
         //in die Funktion kann man aber kein this schreiben, daher die Variable self
@@ -210,7 +205,23 @@ class World {
         });
     }
 
-    //Befehl wird für jedes Element in variable aus ausgeführt
+    drawAllMovableObjects() {
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins)
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.throwableObjects);
+        this.addToMap(this.character);
+    }
+
+    drawAllFixedObjects() {
+        this.addToMap(this.healthBar);
+        this.addToMap(this.bottleBar);
+        this.addToMap(this.coinBar);
+        this.addToMap(this.endbossBar);
+    }
+
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);

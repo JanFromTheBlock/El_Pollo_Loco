@@ -5,5 +5,10 @@ class StatusBar extends DrawableObject {
     constructor() {
         super();
     }  
+
+    setAmountOfObjects(objects){
+        let path = this.IMAGES[objects]
+        this.img = this.imageCache[path];
+    }
 }
 

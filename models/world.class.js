@@ -64,7 +64,7 @@ class World {
 
     deleteBottleFromBottleBar() {
         this.bottleBar.collectedBottles--;
-        this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
+        this.bottleBar.setAmountOfObjects(this.bottleBar.collectedBottles);
     }
 
     AddBottleToThrowableObjects() {
@@ -124,7 +124,7 @@ class World {
     characterCollectsCoin(array) {
         this.collect_coin_sound.play();
         this.coinBar.collectedCoins++
-        this.coinBar.setAmountOfCoins(this.coinBar.collectedCoins);
+        this.coinBar.setAmountOfObjects(this.coinBar.collectedCoins);
         array.splice(this.positionOfArray, 1);
     }
 
@@ -132,7 +132,7 @@ class World {
         //Anzahl an Flaschen zum werfen wird um eins erhöht und bar aktualisiert
         this.collect_bottle_sound.play();
         this.bottleBar.collectedBottles++;
-        this.bottleBar.setAmountOfBottles(this.bottleBar.collectedBottles);
+        this.bottleBar.setAmountOfObjects(this.bottleBar.collectedBottles);
         //Variable gibt die Position an an der im array die bottle gelöscht werden soll
         array.splice(this.positionOfArray, 1);
     }

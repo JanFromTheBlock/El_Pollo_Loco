@@ -13,11 +13,7 @@ class CoinBar extends StatusBar {
     constructor(){
         super();
         this.loadImages(this.IMAGES);
-        this.setAmountOfCoins(this.collectedCoins);
+        this.setAmountOfObjects(this.collectedCoins);
     }
 
-    setAmountOfCoins(coins){
-        let path = this.IMAGES[coins]
-        this.img = this.imageCache[path];
-    }
 }

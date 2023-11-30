@@ -13,11 +13,6 @@ class BottleBar extends StatusBar {
     constructor(){
         super();
         this.loadImages(this.IMAGES);
-        this.setAmountOfBottles(this.collectedBottles);
-    }
-
-    setAmountOfBottles(collectedBottles){
-        let path = this.IMAGES[collectedBottles]
-        this.img = this.imageCache[path];
+        this.setAmountOfObjects(this.collectedBottles);
     }
 }

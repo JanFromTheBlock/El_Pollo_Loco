@@ -85,7 +85,7 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_HURT); //wenn is Hurt true ist, wird Velretze Bilder angezeigt
         if (this.character_hurt_sound.play !== undefined) {
             this.character_hurt_sound.play().then(_ => {
-                this.character_hurt_sound.play.pause();
+                this.character_hurt_sound.pause();
             })
                 .catch(error => {
                 })
@@ -97,7 +97,7 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_JUMPING);  //wenn Pepe in der Luft ist wird Jumping Animation angezeigt
         if (this.jumping_sound.play !== undefined) {
             this.jumping_sound.play().then(_ => {
-                this.jumping_sound.play.pause();
+                this.jumping_sound.pause();
             })
                 .catch(error => {
                 })

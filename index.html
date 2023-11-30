@@ -26,10 +26,23 @@
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
 </head>
-<body onload="init()">
-    
+<body onload="init()">    
 <h1>El pollo loco</h1>
-
 <canvas id="canvas" width="720px" height="480px"></canvas>
+<div class="overlay">
+    <div class="panel" id="panel1">
+        <img src="img/10_other/mute.png" alt="">
+    </div>
+    <div class="panel" id="panel2">
+        <div class="panel-inside">
+            <img id="arrow-left" src="./img/10_other/arrow.png" alt="">
+            <img id="arrow-right" src="./img/10_other/arrow.png" alt="">
+        </div>
+        <div class="panel-inside">
+            <img id="arrow-up" src="./img/10_other/arrow.png" alt="">
+            <img id="throw-bottle" src="img/6_salsa_bottle/salsa_bottle.png" alt="">
+        </div>
+    </div>
+</div>
 </body>
 </html>

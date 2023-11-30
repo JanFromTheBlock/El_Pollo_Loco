@@ -5,7 +5,45 @@ let keyboard = new Keyboard();
 function init(){
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
+    pressMobileButtons();
 }
+
+function pressMobileButtons(){
+    document.getElementById('arrow-left').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+    document.getElementById('arrow-left').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
+    document.getElementById('arrow-right').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    });
+    document.getElementById('arrow-right').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    });
+    document.getElementById('arrow-up').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = true;
+    });
+    document.getElementById('arrow-up').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = false;
+    });
+    document.getElementById('throw-bottle').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.D = true;
+    });
+    document.getElementById('throw-bottle').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.D = false;
+    });
+
+}
+
 //wenn Taste gedrückt wird --> Variable auf Right geändert
 window.addEventListener('keydown', (e) => {
     if (e.keyCode == 39) {

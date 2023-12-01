@@ -39,6 +39,7 @@ class Character extends MovableObject {
     walking_sound = new Audio('audio/running.mp3')
     character_hurt_sound = new Audio('audio/character_hurt.mp3');
     jumping_sound = new Audio('audio/jump.mp3');
+    jumpingSoundAlreadyPlayed = false;
 
 
     constructor() {
@@ -83,26 +84,26 @@ class Character extends MovableObject {
 
     characterIsHurt() {
         this.playAnimation(this.IMAGES_HURT); //wenn is Hurt true ist, wird Velretze Bilder angezeigt
+
         if (this.character_hurt_sound.play !== undefined) {
-            this.character_hurt_sound.play().then(_ => {
-                this.character_hurt_sound.pause();
-            })
-                .catch(error => {
-                })
+            this.character_hurt_sound.play();
         }
         this.character_hurt_sound.play();
+
     }
 
     characterIsJumping() {
         this.playAnimation(this.IMAGES_JUMPING);  //wenn Pepe in der Luft ist wird Jumping Animation angezeigt
-        if (this.jumping_sound.play !== undefined) {
-            this.jumping_sound.play().then(_ => {
-                this.jumping_sound.pause();
-            })
-                .catch(error => {
-                })
+        if (!this.jumpingSoundAlreadyPlayed) {
+            if (this.jumping_sound.play !== undefined) {
+                this.jumping_sound.play();
+            }
+            this.jumping_sound.play();
+            this.jumpingSoundAlreadyPlayed = true;
+            setTimeout(() => {
+                this.jumpingSoundAlreadyPlayed = false;
+            }, 1500);
         }
-        this.jumping_sound.play();
     }
 
     characterisDying() {

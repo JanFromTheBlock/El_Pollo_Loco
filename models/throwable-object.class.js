@@ -58,11 +58,7 @@ class ThrowableObject extends MovableObject {
     bottleIsFlying() {
         this.playAnimation(this.IMAGES_THROWING);
         if (this.bottle_smashing_sound !== undefined) {
-            this.bottle_smashing_sound.play().then(_ => {
-                this.bottle_smashing_sound.pause();
-            })
-                .catch(error => {
-                })
+            this.bottle_smashing_sound.play(); 
         }
     }
 

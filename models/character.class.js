@@ -114,8 +114,7 @@ class Character extends MovableObject {
     pauseSounds() {
         //walking-musik wird kurz pausiert und läuft nur weiter wenn die Tasten wieterhin gedrückt werdne
         this.walking_sound.pause();
-        this.character_hurt_sound.pause();
-        this.jumping_sound.pause();
+        
     }
 
     moveCharacter() {

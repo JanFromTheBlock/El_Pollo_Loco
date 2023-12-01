@@ -25,6 +25,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.pauseSounds();
     }
 
     run() {
@@ -32,7 +33,6 @@ class World {
     }
 
     runWorld() {
-        this.pauseSounds();
         this.checkAllCollisions();
     }
 
@@ -49,6 +49,8 @@ class World {
         this.collect_bottle_sound.pause();
         this.collect_coin_sound.pause();
         this.game_over_sound.pause();
+        this.character.character_hurt_sound.pause();
+        this.character.jumping_sound.pause();
     }
 
     checkThrowableObjectsAvailable() {

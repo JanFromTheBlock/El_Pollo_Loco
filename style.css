@@ -77,7 +77,8 @@ h1{
 
     .overlay{
         width: 100%;
-        margin-top: -100%;
+        margin-top: -66vw;
+        height: 66vw;
     }
     h1{
         display: none;
@@ -91,6 +92,7 @@ h1{
     .overlay{
         height: 100vh;
         margin-top: -100vh;
+        width: 150vh;
     }
     h1{
         display: none;

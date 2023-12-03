@@ -40,6 +40,7 @@ class Character extends MovableObject {
     character_hurt_sound = new Audio('audio/character_hurt.mp3');
     jumping_sound = new Audio('audio/jump.mp3');
     jumpingSoundAlreadyPlayed = false;
+    characterDied = false;
 
 
     constructor() {
@@ -108,6 +109,7 @@ class Character extends MovableObject {
 
     characterisDying() {
         this.playAnimation(this.IMAGES_DEAD);
+        this.characterDied = true;
         this.world.stopGame();
     }
 

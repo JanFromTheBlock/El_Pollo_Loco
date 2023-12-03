@@ -1,5 +1,6 @@
 class World {
     character = new Character();
+    loseGame = new GameOver()
     level = level1;
     canvas;
     ctx;
@@ -16,6 +17,7 @@ class World {
     collect_bottle_sound = new Audio('audio/collect_bottle.mp3');
     collect_coin_sound = new Audio('audio/collect_coins.mp3');
     game_over_sound = new Audio('audio/game_over.mp3');
+    animationFrame;
 
 
     constructor(canvas, keyboard) {
@@ -202,7 +204,7 @@ class World {
         //Die Funktion wird asynchron ausgeführt und startet erst wenn alles vorab gezeichnet wurde.
         //in die Funktion kann man aber kein this schreiben, daher die Variable self
         let self = this;
-        requestAnimationFrame(function () {
+        this.animationFrame = requestAnimationFrame(function () {
             self.draw();
         });
     }
@@ -259,7 +261,19 @@ class World {
 
     stopGame() {
         this.IntervalIds.forEach(clearInterval);
+        cancelAnimationFrame(this.animationFrame);
+        this.resetCanvas();
+        if (this.character.characterDied) {
+            this.lostGame(); 
+        }
+    }
+
+    lostGame(){
         this.game_over_sound.play();
+        this.cameraFollowsCharacter();
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.resetPositionOfCamera();
+        this.addToMap(this.loseGame);
     }
 
     setStoppableInterval(fn, time) {

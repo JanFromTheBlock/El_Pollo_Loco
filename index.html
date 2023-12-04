@@ -28,13 +28,14 @@
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
 </head>
-<body onload="init()">    
+<body onload="init()"> 
 <h1>El pollo loco</h1>
 <canvas id="canvas" width="720px" height="480px"></canvas>
 <div class="overlay">
     <div class="panel" id="panel1">
         <img src="img/10_other/mute.png" alt="">
     </div>
+    <button id = "start-game" onclick="startGame()">Start Game</button>
     <div class="panel" id="panel2">
         <div class="panel-inside">
             <img id="arrow-left" src="./img/10_other/arrow.png" alt="">

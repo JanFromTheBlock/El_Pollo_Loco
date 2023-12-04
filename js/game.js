@@ -2,6 +2,11 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+function startGame(){
+    world.gameStarts = false;
+    document.getElementById('start-game').classList.add('d-none')
+}
+
 function init(){
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);

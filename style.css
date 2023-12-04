@@ -70,6 +70,23 @@ h1{
     gap: 16px;
 }
 
+.d-none{
+    display: none;
+}
+
+#start-game{
+    position: relative;
+    top: -30%;
+    background: #e5e55c;
+    padding: 14px;
+    border: 1px solid black;
+    width: 125px;
+    border-radius: 10px;
+    left: 46%;
+    font-family: 'zabars';
+    font-size: 24px;
+}
+
 @media only screen and (max-width: 720px){
     canvas{
         width: 100%

@@ -35,7 +35,10 @@ function mutePage(){
     world.character.character_hurt_sound.muted = currentState;
     world.character.jumping_sound.muted = currentState;
     world.gameMuted = currentState;
+}
 
+function changeToFullscreen(){
+    canvas.requestFullscreen();
 }
 
 function pressMobileButtons(){

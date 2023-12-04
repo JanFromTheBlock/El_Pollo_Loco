@@ -21,6 +21,7 @@ class World {
     game_win_sound = new Audio('audio/game_win.mp3')
     animationFrame;
     gameStarts = true;
+    gameMuted = false;
 
 
     constructor(canvas, keyboard) {

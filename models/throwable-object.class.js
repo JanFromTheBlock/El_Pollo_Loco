@@ -30,6 +30,9 @@ class ThrowableObject extends MovableObject {
 
 
     throw() {
+        if (world.gameMuted) {
+            this.bottle_smashing_sound.muted = true;
+        }
         this.speedY = 20;
         this.applyGravity();
         this.world.setStoppableInterval(this.animateBottle.bind(this), 25);

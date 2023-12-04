@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let currentState;
 
 function startGame(){
     world.gameStarts = false;
@@ -15,6 +16,26 @@ function init(){
 
 function restartGame(){
     location.reload(); 
+}
+
+function mutePage(){
+    if (world.gameMuted) {
+        currentState = false;
+        document.getElementById('mute-page').src = "img/10_other/volume.png";
+    }else{
+        currentState = true;
+        document.getElementById('mute-page').src = "img/10_other/mute.png";
+    }
+    world.endboss_hurt_sound.muted = currentState;
+    world.collect_coin_sound.muted = currentState;
+    world.collect_bottle_sound.muted = currentState;
+    world.game_over_sound.muted = currentState;
+    world.game_win_sound.muted = currentState;
+    world.character.walking_sound.muted = currentState;
+    world.character.character_hurt_sound.muted = currentState;
+    world.character.jumping_sound.muted = currentState;
+    world.gameMuted = currentState;
+
 }
 
 function pressMobileButtons(){

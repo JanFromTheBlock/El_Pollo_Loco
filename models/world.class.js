@@ -1,6 +1,7 @@
 class World {
     character = new Character();
     loseGame = new GameOver()
+    wonGame = new GameWin();
     level = level1;
     canvas;
     ctx;
@@ -17,7 +18,9 @@ class World {
     collect_bottle_sound = new Audio('audio/collect_bottle.mp3');
     collect_coin_sound = new Audio('audio/collect_coins.mp3');
     game_over_sound = new Audio('audio/game_over.mp3');
+    game_win_sound = new Audio('audio/game_win.mp3')
     animationFrame;
+    gameStarts = true;
 
 
     constructor(canvas, keyboard) {
@@ -35,7 +38,9 @@ class World {
     }
 
     runWorld() {
-        this.checkAllCollisions();
+        if (!this.gameStarts) {
+            this.checkAllCollisions();
+        }
     }
 
     checkAllCollisions() {
@@ -51,6 +56,7 @@ class World {
         this.collect_bottle_sound.pause();
         this.collect_coin_sound.pause();
         this.game_over_sound.pause();
+        this.game_win_sound.pause();
         this.character.character_hurt_sound.pause();
         this.character.jumping_sound.pause();
     }
@@ -170,20 +176,29 @@ class World {
     }
 
     setWorld() {
-        this.character.world = this;
-        this.character.animate();
-        for (let index = 0; index < this.level.enemies.length; index++) {
-            this.level.enemies[index].world = this;
-            this.level.enemies[index].animate();
-        }
+        let startingInvterval = setInterval(() => {
+            if (!this.gameStarts) {
+                this.character.world = this;
+                this.character.animate();
+                for (let index = 0; index < this.level.enemies.length; index++) {
+                    this.level.enemies[index].world = this;
+                    this.level.enemies[index].animate();
+                }
+                clearInterval(startingInvterval);
+            }
+        }, 1000/25);
     }
 
     draw() {
         this.resetCanvas();
-        this.cameraFollowsCharacter();
-        this.drawAllMovableObjects();
-        this.resetPositionOfCamera();
-        this.drawAllFixedObjects();
+        if (this.gameStarts) {
+            this.addToMap(this.wonGame);
+        } else {
+            this.cameraFollowsCharacter();
+            this.drawAllMovableObjects();
+            this.resetPositionOfCamera();
+            this.drawAllFixedObjects();
+        }
         this.repeatDrawAsOftenAsPossible();
     }
 
@@ -264,11 +279,18 @@ class World {
         cancelAnimationFrame(this.animationFrame);
         this.resetCanvas();
         if (this.character.characterDied) {
-            this.lostGame(); 
+            this.lostGame();
+        } else {
+            this.wonTheGame();
         }
     }
 
-    lostGame(){
+    wonTheGame() {
+        this.game_win_sound.play();
+        this.addToMap(this.wonGame);
+    }
+
+    lostGame() {
         this.game_over_sound.play();
         this.cameraFollowsCharacter();
         this.addObjectsToMap(this.level.backgroundObjects);

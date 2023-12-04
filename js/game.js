@@ -13,6 +13,10 @@ function init(){
     pressMobileButtons();
 }
 
+function restartGame(){
+    location.reload(); 
+}
+
 function pressMobileButtons(){
     document.getElementById('arrow-left').addEventListener('touchstart', (e) => {
         e.preventDefault();

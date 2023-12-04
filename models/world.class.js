@@ -283,6 +283,7 @@ class World {
         } else {
             this.wonTheGame();
         }
+        document.getElementById('restart-game').classList.remove('d-none')
     }
 
     wonTheGame() {

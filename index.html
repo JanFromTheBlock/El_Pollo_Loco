@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html translate="no" lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,26 +29,50 @@
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
 </head>
-<body onload="init()"> 
-<h1>El pollo loco</h1>
-<canvas id="canvas" width="720px" height="480px"></canvas>
-<div class="overlay">
-    <div class="panel panel-inside" id="panel1">
-        <img id="full-screen" class="d-none" onclick="changeToFullscreen()" src="./img/10_other/fullscreen.png" alt="">
-        <img id="mute-page" onclick="mutePage()" src="img/10_other/volume.png" alt="">
-    </div>
-    <button id = "start-game" onclick="startGame()">Start Game</button>
-    <button class="d-none" id = "restart-game" onclick="restartGame()">Restart Game</button>
-    <div class="panel" id="panel2">
-        <div class="panel-inside">
-            <img id="arrow-left" src="./img/10_other/arrow.png" alt="">
-            <img id="arrow-right" src="./img/10_other/arrow.png" alt="">
+
+<body onload="init()">
+    <h1>El pollo loco</h1>
+    <canvas id="canvas" width="720px" height="480px"></canvas>
+    <div class="overlay">
+        <div class="panel panel-inside" id="panel1">
+            <img id="full-screen" class="d-none" onclick="changeToFullscreen()" src="./img/10_other/fullscreen.png"
+                alt="">
+            <img id="mute-page" onclick="mutePage()" src="img/10_other/volume.png" alt="">
         </div>
-        <div class="panel-inside">
-            <img id="arrow-up" src="./img/10_other/arrow.png" alt="">
-            <img id="throw-bottle" src="img/6_salsa_bottle/salsa_bottle.png" alt="">
+        <button id="start-game" onclick="startGame()">Start Game</button>
+        <button class="d-none" id="restart-game" onclick="restartGame()">Restart Game</button>
+        <div class="panel" id="panel2">
+            <div class="panel-inside">
+                <img id="arrow-left" class="arrow-left" src="./img/10_other/arrow.png" alt="">
+                <img id="arrow-right" class="arrow-right" src="./img/10_other/arrow.png" alt="">
+            </div>
+            <div class="panel-inside">
+                <img id="space" src="./img/10_other/space.png" alt="">
+                <img id="throw-bottle" src="img/6_salsa_bottle/salsa_bottle.png" alt="">
+            </div>
         </div>
     </div>
-</div>
+    <div id="how-to-play" class="overlay d-none">
+        <div id="close-panel"> <div id="how-to-play-title">How To Play</div> <div id="close-how-to-play">X</div></div>
+        <div id="key-panel">
+            <div class="key-panels">
+                <div>Go Left:</div><img class="arrow-left" src="./img/10_other/arrow.png">
+            </div>
+            <div class="key-panels">
+                <div>Go Right:</div><img class="arrow-right" src="./img/10_other/arrow.png">
+            </div>
+            <div class="key-panels">
+                <div>Jump:</div><img src="./img/10_other/space.png">
+            </div>
+            <div class="key-panels">
+                <div>Throw Bottle:</div>
+                <div><img src="img/6_salsa_bottle/salsa_bottle.png">
+                    <img id="backslash" src="./img/10_other/backslash.png">
+                    <img src="./img/10_other/D-key.png">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

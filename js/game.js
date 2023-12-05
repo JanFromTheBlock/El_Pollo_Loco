@@ -59,11 +59,11 @@ function pressMobileButtons(){
         e.preventDefault();
         keyboard.RIGHT = false;
     });
-    document.getElementById('arrow-up').addEventListener('touchstart', (e) => {
+    document.getElementById('space').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.SPACE = true;
     });
-    document.getElementById('arrow-up').addEventListener('touchend', (e) => {
+    document.getElementById('space').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.SPACE = false;
     });

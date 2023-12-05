@@ -39,7 +39,10 @@
                 alt="">
             <img id="mute-page" onclick="mutePage()" src="img/10_other/volume.png" alt="">
         </div>
-        <button id="start-game" onclick="startGame()">Start Game</button>
+        <div id="buttons">
+            <button id="start-game" onclick="startGame()">Start Game</button>
+            <button id="how-to-play-button" onclick="openHowToPlay()">How To Play</button>
+        </div>
         <button class="d-none" id="restart-game" onclick="restartGame()">Restart Game</button>
         <div class="panel" id="panel2">
             <div class="panel-inside">
@@ -53,7 +56,10 @@
         </div>
     </div>
     <div id="how-to-play" class="overlay d-none">
-        <div id="close-panel"> <div id="how-to-play-title">How To Play</div> <div id="close-how-to-play">X</div></div>
+        <div id="close-panel">
+            <div id="how-to-play-title">How To Play</div>
+            <div onclick="closeHowToPlay()" id="close-how-to-play">X</div>
+        </div>
         <div id="key-panel">
             <div class="key-panels">
                 <div>Go Left:</div><img class="arrow-left" src="./img/10_other/arrow.png">

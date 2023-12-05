@@ -6,6 +6,7 @@ let currentState;
 function startGame(){
     world.gameStarts = false;
     document.getElementById('start-game').classList.add('d-none');
+    document.getElementById('how-to-play-button').classList.add('d-none');
     document.getElementById('full-screen').classList.remove('d-none');
 }
 
@@ -36,6 +37,14 @@ function mutePage(){
     world.character.character_hurt_sound.muted = currentState;
     world.character.jumping_sound.muted = currentState;
     world.gameMuted = currentState;
+}
+
+function openHowToPlay(){
+    document.getElementById('how-to-play').classList.remove('d-none')
+}
+
+function closeHowToPlay(){
+    document.getElementById('how-to-play').classList.add('d-none')
 }
 
 function changeToFullscreen(){

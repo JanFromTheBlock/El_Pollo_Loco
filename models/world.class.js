@@ -284,7 +284,8 @@ class World {
         } else {
             this.wonTheGame();
         }
-        document.getElementById('restart-game').classList.remove('d-none')
+        document.getElementById('restart-game').classList.remove('d-none');
+        document.getElementById('full-screen').classList.add('d-none');
     }
 
     wonTheGame() {

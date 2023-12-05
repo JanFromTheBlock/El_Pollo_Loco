@@ -5,7 +5,8 @@ let currentState;
 
 function startGame(){
     world.gameStarts = false;
-    document.getElementById('start-game').classList.add('d-none')
+    document.getElementById('start-game').classList.add('d-none');
+    document.getElementById('full-screen').classList.remove('d-none');
 }
 
 function init(){

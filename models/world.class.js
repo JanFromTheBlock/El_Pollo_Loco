@@ -32,6 +32,7 @@ class World {
         this.setWorld();
         this.run();
         this.pauseSounds();
+        this.character.timeOfLastAction();
     }
 
     run() {

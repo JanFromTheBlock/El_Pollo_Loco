@@ -38,6 +38,7 @@ class ThrowableObject extends MovableObject {
         this.applyGravity();
         this.world.setStoppableInterval(this.animateBottle.bind(this), 25);
         this.world.setStoppableInterval(this.moveBottle.bind(this), 25);
+        this.world.character.timeOfLastAction();
     }
 
     moveBottle() {

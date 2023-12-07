@@ -63,7 +63,7 @@ class World {
     }
 
     checkThrowableObjectsAvailable() {
-        if (this.keyboard.D && this.bottleBar.collectedBottles > 0) {
+        if (this.keyboard.D && this.bottleBar.collectedBottles > 0 && !this.throwableObjects.length) {
             this.initializeBottleThrow();
         }
     }
@@ -187,7 +187,7 @@ class World {
                 }
                 clearInterval(startingInvterval);
             }
-        }, 1000/25);
+        }, 1000 / 25);
     }
 
     draw() {
@@ -276,16 +276,18 @@ class World {
     }
 
     stopGame() {
-        this.IntervalIds.forEach(clearInterval);
-        cancelAnimationFrame(this.animationFrame);
-        this.resetCanvas();
-        if (this.character.characterDied) {
-            this.lostGame();
-        } else {
-            this.wonTheGame();
-        }
-        document.getElementById('restart-game').classList.remove('d-none');
-        document.getElementById('full-screen').classList.add('d-none');
+        setInterval(() => {
+            this.IntervalIds.forEach(clearInterval);
+            cancelAnimationFrame(this.animationFrame);
+            this.resetCanvas();
+            if (this.character.characterDied) {
+                this.lostGame();
+            } else {
+                this.wonTheGame();
+            }
+            document.getElementById('restart-game').classList.remove('d-none');
+            document.getElementById('full-screen').classList.add('d-none');
+        }, 1500);
     }
 
     wonTheGame() {

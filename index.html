@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Pollo Loco</title>
+    <link rel="icon" type="image/png" href="img/6_salsa_bottle/salsa_bottle.png">
     <link rel="stylesheet" href="./style.css">
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
@@ -35,15 +36,15 @@
     <canvas id="canvas" width="720px" height="480px"></canvas>
     <div class="overlay">
         <div class="panel panel-inside" id="panel1">
-            <img id="full-screen" class="d-none" onclick="changeToFullscreen()" src="./img/10_other/fullscreen.png"
+            <img id="full-screen" class="d-none hover" onclick="changeToFullscreen()" src="./img/10_other/fullscreen.png"
                 alt="">
-            <img id="mute-page" onclick="mutePage()" src="img/10_other/volume.png" alt="">
+            <img id="mute-page" class="hover" onclick="mutePage()" src="img/10_other/volume.png" alt="">
         </div>
         <div id="buttons">
-            <button id="start-game" onclick="startGame()">Start Game</button>
-            <button id="how-to-play-button" onclick="openHowToPlay()">How To Play</button>
+            <button class="hover" id="start-game" onclick="startGame()">Start Game</button>
+            <button class="hover" id="how-to-play-button" onclick="openHowToPlay()">How To Play</button>
         </div>
-        <button class="d-none" id="restart-game" onclick="restartGame()">Restart Game</button>
+        <button class="d-none hover" id="restart-game" onclick="restartGame()">Restart Game</button>
         <div class="panel" id="panel2">
             <div class="panel-inside">
                 <img id="arrow-left" class="arrow-left" src="./img/10_other/arrow.png" alt="">

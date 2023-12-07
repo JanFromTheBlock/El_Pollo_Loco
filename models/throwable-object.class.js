@@ -17,6 +17,7 @@ class ThrowableObject extends MovableObject {
     ];
 
     bottle_smashing_sound = new Audio('audio/bottle_smash.mp3');
+    throwingSoundAlreadyPlayed = false
     constructor(x, y) {
         super().loadImage(this.IMAGES_THROWING[0]);
         this.loadImages(this.IMAGES_THROWING);
@@ -60,12 +61,17 @@ class ThrowableObject extends MovableObject {
 
     bottleIsFlying() {
         this.playAnimation(this.IMAGES_THROWING);
-        if (this.bottle_smashing_sound !== undefined) {
-            this.bottle_smashing_sound.play(); 
+        if (!this.throwingSoundAlreadyPlayed) {
+            if (this.bottle_smashing_sound.play() !== undefined) {
+                this.bottle_smashing_sound.play();
+            }
+            this.bottle_smashing_sound.play();
+            this.throwingSoundAlreadyPlayed = true;
         }
     }
 
     bottleIsColliding() {
         this.playAnimation(this.IMAGES_COLLIDING);
+        this.throwingSoundAlreadyPlayed = false;
     }
 }

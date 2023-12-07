@@ -61,6 +61,7 @@ h1{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    z-index: 99;
 }
 .panel-inside{
     display: flex;
@@ -150,6 +151,11 @@ button{
 #restart-game{
     left: calc(50% - 60px);
     top: -40%;
+}
+
+.hover:hover{
+    background: #c3c339 !important;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 720px){

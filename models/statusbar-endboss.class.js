@@ -1,5 +1,5 @@
 class EndbossBar extends StatusBar {
-    y = -10;
+    y = 40;
     x = 500;
 percentage = 100
 
@@ -42,7 +42,7 @@ percentage = 100
     }
 
     hit(){
-        this.percentage -= 20;
+        this.percentage -= 34;
         if(this.percentage < 0){
             this.percentage = 0;
         }else{

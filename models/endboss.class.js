@@ -6,6 +6,7 @@ class Endboss extends MovableObject {
     y = 55;
     speed = 0.3;
     world;
+    
 
     IMAGES_STANDING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -93,6 +94,7 @@ class Endboss extends MovableObject {
 
     endbossIsDying() {
         this.playAnimation(this.IMAGES_DEAD);
+        this.world.endboss_died_sound.play();
         this.speed = 0;
         world.stopGame();
     }

@@ -18,7 +18,8 @@ class World {
     collect_bottle_sound = new Audio('audio/collect_bottle.mp3');
     collect_coin_sound = new Audio('audio/collect_coins.mp3');
     game_over_sound = new Audio('audio/game_over.mp3');
-    game_win_sound = new Audio('audio/game_win.mp3')
+    game_win_sound = new Audio('audio/game_win.mp3');
+    endboss_died_sound = new Audio('audio/chicken_died.mp3');
     animationFrame;
     gameStarts = true;
     gameMuted = false;
@@ -61,6 +62,8 @@ class World {
         this.game_win_sound.pause();
         this.character.character_hurt_sound.pause();
         this.character.jumping_sound.pause();
+        this.endboss_died_sound.pause();
+        this.character.character_died_sound.pause();
     }
 
     checkThrowableObjectsAvailable() {

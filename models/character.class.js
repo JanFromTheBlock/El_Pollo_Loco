@@ -65,6 +65,7 @@ class Character extends MovableObject {
     world;
     walking_sound = new Audio('audio/running.mp3')
     character_hurt_sound = new Audio('audio/character_hurt.mp3');
+    character_died_sound = new Audio('audio/character_died.mp3')
     jumping_sound = new Audio('audio/jump.mp3');
     jumpingSoundAlreadyPlayed = false;
     characterDied = false;
@@ -165,6 +166,7 @@ class Character extends MovableObject {
 
     characterisDying() {
         this.playAnimation(this.IMAGES_DEAD);
+        this.character_died_sound.play();
         this.characterDied = true;
         this.world.stopGame();
     }

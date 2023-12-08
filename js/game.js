@@ -36,6 +36,8 @@ function mutePage(){
     world.character.walking_sound.muted = currentState;
     world.character.character_hurt_sound.muted = currentState;
     world.character.jumping_sound.muted = currentState;
+    world.endboss_died_sound.muted = currentState;
+    world.character.character_died_sound.muted = currentState;
     world.gameMuted = currentState;
 }
 

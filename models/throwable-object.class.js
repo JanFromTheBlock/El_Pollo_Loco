@@ -27,6 +27,7 @@ class ThrowableObject extends MovableObject {
         this.height = 60;
         this.width = 50;
         world;
+        this.bottle_smashing_sound.play();
     }
 
 
@@ -48,7 +49,6 @@ class ThrowableObject extends MovableObject {
     }
 
     animateBottle() {
-        this.pauseSound();
         if (this.collision) {
             this.bottleIsColliding();
         } else {
@@ -56,19 +56,8 @@ class ThrowableObject extends MovableObject {
         }
     }
 
-    pauseSound(){
-        this.bottle_smashing_sound.pause();
-    }
-
     bottleIsFlying() {
         this.playAnimation(this.IMAGES_THROWING);
-        if (!this.throwingSoundAlreadyPlayed) {
-            if (this.bottle_smashing_sound.play() !== undefined) {
-                this.bottle_smashing_sound.play();
-            }
-            this.bottle_smashing_sound.play();
-            this.throwingSoundAlreadyPlayed = true;
-        }
     }
 
     bottleIsColliding() {

@@ -87,18 +87,20 @@ class World {
         this.throwableObjects.push(bottle);
         let i = this.throwableObjects.length - 1;
         this.throwableObjects[i].world = this;
-        this.throwableObjects[i].throw();
+        this.throwableObjects[i].throw(this.character.otherDirection);
     }
 
     checkCollisionsWithThrownBottles(array) {
         array.forEach((o) => {
             let i = array.indexOf(o);
             if (this.level.enemies['3'].isColliding(o) || o.y > 335) {
-                this.endbossIsGettingHurt(array, i);
-                if (!this.throwableObjects[i].alreadyHit) {
-                    this.reduceEndbossHealthBar(i);
+                this.bottleSplashes(array, i);
+                if (this.level.enemies['3'].isColliding(o)) {
+                    this.endbossIsGettingHurt();
+                    if (!this.throwableObjects[i].alreadyHit) {
+                        this.reduceEndbossHealthBar(i);
+                    }
                 }
-
             }
         })
     }
@@ -110,12 +112,15 @@ class World {
         this.level.enemies['3'].endbossHurt = true;;
     }
 
-    endbossIsGettingHurt(array, i) {
+    bottleSplashes(array, i) {
         this.throwableObjects[i].collision = true;
-        this.endboss_hurt_sound.play();
         setTimeout(() => {
             array.splice(i, 1);
         }, 0)
+    }
+
+    endbossIsGettingHurt() {
+        this.endboss_hurt_sound.play();
     }
 
     checkCollisions(array, objectType) {

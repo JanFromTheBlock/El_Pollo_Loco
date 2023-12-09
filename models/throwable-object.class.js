@@ -31,20 +31,31 @@ class ThrowableObject extends MovableObject {
     }
 
 
-    throw() {
+    throw(throwOtherDirection) {
         if (world.gameMuted) {
             this.bottle_smashing_sound.muted = true;
         }
+        if (throwOtherDirection) {
+            this.x -= 120;
+        }
         this.speedY = 20;
         this.applyGravity();
+        const moveBottleWrapper = () => {
+            this.moveBottle(throwOtherDirection);
+        };
         this.world.setStoppableInterval(this.animateBottle.bind(this), 25);
-        this.world.setStoppableInterval(this.moveBottle.bind(this), 25);
+        this.world.setStoppableInterval(moveBottleWrapper.bind(this), 25);
         this.world.character.timeOfLastAction();
     }
 
-    moveBottle() {
+    moveBottle(throwOtherDirection) {
         if (!this.collision) {
-            this.x += 20;
+            if (!throwOtherDirection) {
+                this.x += 10;
+            }else{
+                this.x -= 10;
+            }
+            
         }
     }
 

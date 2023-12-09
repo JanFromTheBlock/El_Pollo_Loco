@@ -116,7 +116,7 @@ class World {
         this.throwableObjects[i].collision = true;
         setTimeout(() => {
             array.splice(i, 1);
-        }, 0)
+        }, 50)
     }
 
     endbossIsGettingHurt() {

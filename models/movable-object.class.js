@@ -8,7 +8,7 @@ class MovableObject extends DrawableObject {
     endboss = false;
     offsetx = 0;
     offsety = 0;
-    offsety2 = 0 
+    offsety2 = 0
     chickenIsDying = false;
 
 
@@ -26,38 +26,38 @@ class MovableObject extends DrawableObject {
         //wenn throwable object dann müssen die nicht aboveground sein
         if (this instanceof ThrowableObject) {
             return true;
-        }else{
-             //solange Pepe höher als 155px ist, ist er in der Luft
-        return this.y < 155;
+        } else {
+            //solange Pepe höher als 155px ist, ist er in der Luft
+            return this.y < 155;
         }
     }
 
-   
+
     //character.isColliding(chicken) detektiert pb der Charakter mit dem gewähltem Objekt zusammenstößt, indem geschaut wird, ob der Rahmen der beiden Elemente überkreuzt
     isColliding(mo) {
-        return this.x + this.width + this.offsetx > mo.x &&
-                this.y + this.height > mo.y &&
-                this.x + this.offsety < mo.x &&
-                this.y + this.offsety2  < mo.y + mo.height
-}
+        return this.x + 20 < mo.x + mo.width &&
+            this.y + 120 < mo.y + mo.height &&
+            this.x + this.width - 20 > mo.x &&
+            this.y + this.height > mo.y;
+    }
 
-    hit(){
+    hit() {
         this.energy -= 5;
-        if(this.energy < 0){
+        if (this.energy < 0) {
             this.energy = 0;
-        }else{
+        } else {
             //Zeit wird in Zahlen gespeichert in ms seit 1.1.1970
             this.lastHit = new Date().getTime();
         }
     }
 
-    isHurt(){
+    isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; //Differenz in ms seit letzem Hit
         timepassed = timepassed / 1000; // Differenz in Sekunden umgerechnet
         return timepassed < 1; // wenn Zeitpunkt des letzten Hits weniger als eine Skeunde zurückliegt, dann wird True ausgegeben
     }
 
-    isDead(){
+    isDead() {
         return this.energy == 0;
     }
 

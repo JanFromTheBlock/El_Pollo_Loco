@@ -25,6 +25,14 @@ class DrawableObject{
             ctx.rect(this.x + 20, this.y + 120, this.width - 40, this.height -120);
             ctx.stroke();
         }
+
+        if (this instanceof Chicken || this instanceof ChickenSmall) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
     }
 
        //lade mehrere Bilder aus einem Array

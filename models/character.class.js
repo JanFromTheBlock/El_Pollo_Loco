@@ -2,6 +2,9 @@ class Character extends MovableObject {
     height = 280;
     y = 155;
     speed = 10;
+    offsetx = -30;
+    offsety = 20;
+    offsety2 = 120 
 
 
     IMAGES_SLEEPING = [

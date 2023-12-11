@@ -51,9 +51,9 @@ class ThrowableObject extends MovableObject {
     moveBottle(throwOtherDirection) {
         if (!this.collision) {
             if (!throwOtherDirection) {
-                this.x += 10;
+                this.x += 5;
             }else{
-                this.x -= 10;
+                this.x -= 5;
             }
             
         }

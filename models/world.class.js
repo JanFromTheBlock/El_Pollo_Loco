@@ -95,16 +95,23 @@ class World {
         for (let indexEnemies = 0; indexEnemies < this.level.enemies.length; indexEnemies++) {
             if (this.level.enemies[indexEnemies].endboss) {
                 this.indexOfEndboss = indexEnemies;
-            }   
+            }
         }
         array.forEach((o) => {
             let i = array.indexOf(o);
-            if (this.level.enemies[this.indexOfEndboss].isColliding(o) || o.y > 335) {
-                this.bottleSplashes(array, i);
-                if (this.level.enemies[this.indexOfEndboss].isColliding(o)) {
-                    this.endbossIsGettingHurt();
-                    if (!this.throwableObjects[i].alreadyHit) {
-                        this.reduceEndbossHealthBar(i, this.indexOfEndboss);
+            for (let index = 0; index < this.level.enemies.length; index++) {
+                if (this.level.enemies[index].isColliding(o) || o.y > 335) {
+                    this.bottleSplashes(array, i);
+                    if (this.level.enemies[this.indexOfEndboss].isColliding(o)) {
+                        this.endbossIsGettingHurt();
+                        if (!this.throwableObjects[i].alreadyHit) {
+                            this.reduceEndbossHealthBar(i, this.indexOfEndboss);
+                        }
+                    }else if (this.level.enemies[index].isColliding(o)) {
+                        this.level.enemies[index].enemy_dead = true;
+                        setTimeout(() => {
+                            this.level.enemies.splice(index, 1);
+                        }, 400);
                     }
                 }
             }
@@ -138,7 +145,7 @@ class World {
                 if (objectType == 'enemy') {
                     if (this.character.isAboveGround() && !this.keyboard.LEFT && !this.keyboard.RIGHT) {
                         console.log('jumping on', o);
-                    }else{
+                    } else {
                         this.characterRunsIntoEnemy(o);
                     }
                 } if (objectType == 'bottle') {

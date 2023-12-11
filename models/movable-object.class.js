@@ -6,6 +6,10 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
     endboss = false;
+    offsetx = 0;
+    offsety = 0;
+    offsety2 = 0 
+    
 
 
     applyGravity() {
@@ -31,10 +35,10 @@ class MovableObject extends DrawableObject {
    
     //character.isColliding(chicken) detektiert pb der Charakter mit dem gewähltem Objekt zusammenstößt, indem geschaut wird, ob der Rahmen der beiden Elemente überkreuzt
     isColliding(mo) {
-        return this.x + this.width - 30 > mo.x &&
+        return this.x + this.width + this.offsetx > mo.x &&
                 this.y + this.height > mo.y &&
-                this.x + 20 < mo.x &&
-                this.y + 120  < mo.y + mo.height
+                this.x + this.offsety < mo.x &&
+                this.y + this.offsety2  < mo.y + mo.height
 }
 
     hit(){

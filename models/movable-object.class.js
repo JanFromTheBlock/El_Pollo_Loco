@@ -8,7 +8,7 @@ class MovableObject extends DrawableObject {
     endboss = false;
     offsetx = 0;
     offsety = 0;
-    offsety2 = 0
+    offsetWidth = 0
     chickenIsDying = false;
 
 
@@ -35,9 +35,9 @@ class MovableObject extends DrawableObject {
 
     //character.isColliding(chicken) detektiert pb der Charakter mit dem gewähltem Objekt zusammenstößt, indem geschaut wird, ob der Rahmen der beiden Elemente überkreuzt
     isColliding(mo) {
-        return this.x + 20 < mo.x + mo.width &&
-            this.y + 120 < mo.y + mo.height &&
-            this.x + this.width - 20 > mo.x &&
+        return this.x + this.offsetx < mo.x + mo.width &&
+            this.y + this.offsety < mo.y + mo.height &&
+            this.x + this.width + this.offsetWidth > mo.x &&
             this.y + this.height > mo.y;
     }
 

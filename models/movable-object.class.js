@@ -9,7 +9,7 @@ class MovableObject extends DrawableObject {
     offsetx = 0;
     offsety = 0;
     offsety2 = 0 
-    
+    chickenIsDying = false;
 
 
     applyGravity() {

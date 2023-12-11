@@ -73,6 +73,7 @@ class Character extends MovableObject {
     jumpingSoundAlreadyPlayed = false;
     characterDied = false;
     lastAction;
+    characterIsLanding = false;
 
 
     constructor() {
@@ -155,6 +156,7 @@ class Character extends MovableObject {
 
     characterIsJumping() {
         this.playAnimation(this.IMAGES_JUMPING);  //wenn Pepe in der Luft ist wird Jumping Animation angezeigt
+        this.characterIsLanding = true;
         if (!this.jumpingSoundAlreadyPlayed) {
             if (this.jumping_sound.play !== undefined) {
                 this.jumping_sound.play();
@@ -163,6 +165,7 @@ class Character extends MovableObject {
             this.jumpingSoundAlreadyPlayed = true;
             setTimeout(() => {
                 this.jumpingSoundAlreadyPlayed = false;
+                this.characterIsLanding = false;
             }, 1500);
         }
     }

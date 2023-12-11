@@ -97,9 +97,8 @@ class World {
                 this.indexOfEndboss = indexEnemies;
             }
         }
-        array.forEach((o) => {
+        array.forEach((o,) => {
             let i = array.indexOf(o);
-            for (let index = 0; index < this.level.enemies.length; index++) {
                 if (this.level.enemies[index].isColliding(o) || o.y > 335) {
                     this.bottleSplashes(array, i);
                     if (this.level.enemies[this.indexOfEndboss].isColliding(o)) {
@@ -108,14 +107,18 @@ class World {
                             this.reduceEndbossHealthBar(i, this.indexOfEndboss);
                         }
                     }else if (this.level.enemies[index].isColliding(o)) {
-                        this.level.enemies[index].enemy_dead = true;
-                        setTimeout(() => {
-                            this.level.enemies.splice(index, 1);
-                        }, 400);
+                     this.chickenDies(index)
                     }
                 }
-            }
         })
+    }
+
+    chickenDies(index){
+        this.level.enemies[index].enemy_dead = true;
+        this.level.enemies[index].chickenIsDying = true;
+        setTimeout(() => {
+            this.level.enemies.splice(index, 1);
+        }, 400);
     }
 
     reduceEndbossHealthBar(i, indexOfEndboss) {
@@ -137,16 +140,18 @@ class World {
     }
 
     checkCollisions(array, objectType) {
-        array.forEach((o) => {
+        array.forEach((o, index) => {
             if (objectType == 'bottle' || objectType == 'coin') {
                 this.identifyPositionofObjectInArray();
             }
             if (this.character.isColliding(o)) {
                 if (objectType == 'enemy') {
-                    if (this.character.isAboveGround() && !this.keyboard.LEFT && !this.keyboard.RIGHT) {
-                        console.log('jumping on', o);
-                    } else {
-                        this.characterRunsIntoEnemy(o);
+                    if (this.character.isAboveGround() && !this.keyboard.LEFT && !this.keyboard.RIGHT && this.character.characterIsLanding) {
+                        this.chickenDies(index);
+                        } else {
+                            if (!this.level.enemies[index].chickenIsDying) {
+                                this.characterRunsIntoEnemy(o);
+                            }
                     }
                 } if (objectType == 'bottle') {
                     this.characterCollectsBottle(array);

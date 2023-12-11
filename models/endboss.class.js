@@ -6,6 +6,7 @@ class Endboss extends MovableObject {
     y = 55;
     speed = 0.3;
     world;
+    endboss = true;
     
 
     IMAGES_STANDING = [

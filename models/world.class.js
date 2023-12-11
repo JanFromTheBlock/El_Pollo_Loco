@@ -23,6 +23,7 @@ class World {
     animationFrame;
     gameStarts = true;
     gameMuted = false;
+    indexOfEndboss;
 
 
     constructor(canvas, keyboard) {
@@ -91,25 +92,30 @@ class World {
     }
 
     checkCollisionsWithThrownBottles(array) {
+        for (let indexEnemies = 0; indexEnemies < this.level.enemies.length; indexEnemies++) {
+            if (this.level.enemies[indexEnemies].endboss) {
+                this.indexOfEndboss = indexEnemies;
+            }   
+        }
         array.forEach((o) => {
             let i = array.indexOf(o);
-            if (this.level.enemies['3'].isColliding(o) || o.y > 335) {
+            if (this.level.enemies[this.indexOfEndboss].isColliding(o) || o.y > 335) {
                 this.bottleSplashes(array, i);
-                if (this.level.enemies['3'].isColliding(o)) {
+                if (this.level.enemies[this.indexOfEndboss].isColliding(o)) {
                     this.endbossIsGettingHurt();
                     if (!this.throwableObjects[i].alreadyHit) {
-                        this.reduceEndbossHealthBar(i);
+                        this.reduceEndbossHealthBar(i, this.indexOfEndboss);
                     }
                 }
             }
         })
     }
 
-    reduceEndbossHealthBar(i) {
+    reduceEndbossHealthBar(i, indexOfEndboss) {
         this.endbossBar.hit();
         this.endbossBar.setPercentage(this.endbossBar.percentage);
         this.throwableObjects[i].alreadyHit = true;
-        this.level.enemies['3'].endbossHurt = true;;
+        this.level.enemies[indexOfEndboss].endbossHurt = true;;
     }
 
     bottleSplashes(array, i) {
@@ -130,7 +136,11 @@ class World {
             }
             if (this.character.isColliding(o)) {
                 if (objectType == 'enemy') {
-                    this.characterRunsIntoEnemy(o);
+                    if (this.character.isAboveGround() && !this.keyboard.LEFT && !this.keyboard.RIGHT) {
+                        console.log('jumping on', o);
+                    }else{
+                        this.characterRunsIntoEnemy(o);
+                    }
                 } if (objectType == 'bottle') {
                     this.characterCollectsBottle(array);
                 } if (objectType == 'coin') {

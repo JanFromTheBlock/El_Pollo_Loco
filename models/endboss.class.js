@@ -88,8 +88,9 @@ class Endboss extends MovableObject {
      * 
      */
     endbossIsRunning() {
-        this.playAnimation(this.IMAGES_WALKING);
         if (!this.endbossHurt) {
+            this.endbossRun = true;
+            this.playAnimation(this.IMAGES_WALKING);
             this.world.setStoppableInterval(this.moveLeft.bind(this), 1000 / 60);
         }
     }

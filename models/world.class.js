@@ -135,7 +135,7 @@ class World {
     /**
      * This function checks whether the bottle collide with the ground, a normal chicken or the endobss
      * 
-     * @param {array} array - enemies who are potential victims of the thrown bottles
+     * @param {array} array - array of throwable objects
      */
     checkCollisionsWithThrownBottles(array) {
         array.forEach((o, index) => {

@@ -8,7 +8,6 @@ class Endboss extends MovableObject {
     world;
     endboss = true;
     
-
     IMAGES_STANDING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -50,8 +49,16 @@ class Endboss extends MovableObject {
         this.x = 2500;
     }
 
+    /**
+     * This function sets the interval to animate the endboss
+     * 
+     */
     animate() { this.world.setStoppableInterval(this.animateEndboss.bind(this), 200); }
 
+    /**
+     * This function checks the situation of the endboss and plays the matching animation
+     * 
+     */
     animateEndboss() {
         if (world.endbossBar.percentage == 0) {
             this.endbossIsDying();
@@ -68,10 +75,18 @@ class Endboss extends MovableObject {
         }
     }
 
-    endbossIsWaiting(){
+    /**
+     * This function animates the waiting endboss
+     * 
+     */
+    endbossIsWaiting() {
         this.playAnimation(this.IMAGES_STANDING);
     }
 
+    /**
+     * This function animates the running endboss
+     * 
+     */
     endbossIsRunning() {
         this.playAnimation(this.IMAGES_WALKING);
         if (!this.endbossHurt) {
@@ -79,13 +94,21 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     *This function animates the hurt endboss
+     * 
+     */
     endbossIsHurt() {
         this.speed = 0;
         this.playAnimation(this.IMAGES_ATTACKING);
         this.endbossIsAttacking();
     }
 
-    endbossIsAttacking(){
+    /**
+     * This function animates the attacking endboss
+     * 
+     */
+    endbossIsAttacking() {
         setTimeout(() => {
             this.endbossHurt = false;
             this.endbossRun = true;
@@ -93,12 +116,15 @@ class Endboss extends MovableObject {
         }, 1000);
     }
 
+    /**
+     * This function let the endboss die and triggers the termination of the game
+     * 
+     */
     endbossIsDying() {
         this.playAnimation(this.IMAGES_DEAD);
         this.world.endboss_died_sound.play();
         this.speed = 0;
         world.stopGame();
     }
-
 
 }

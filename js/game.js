@@ -3,6 +3,20 @@ let world;
 let keyboard = new Keyboard();
 let currentState;
 
+/**
+ * This function sets the canvas, the world and mobile buttons
+ * 
+ */
+function init(){
+    canvas = document.getElementById('canvas');
+    world = new World(canvas, keyboard);
+    pressMobileButtons();
+}
+
+/**
+ * This function is used to start all the game animations and hides the start-screen
+ * 
+ */
 function startGame(){
     world.gameStarts = false;
     document.getElementById('start-game').classList.add('d-none');
@@ -10,16 +24,18 @@ function startGame(){
     document.getElementById('full-screen').classList.remove('d-none');
 }
 
-function init(){
-    canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
-    pressMobileButtons();
-}
-
+/**
+ * this function restarts the game after ending a game
+ * 
+ */
 function restartGame(){
     location.reload(); 
 }
 
+/**
+ * this function is used to switch between muted and unmuted playing
+ * 
+ */
 function mutePage(){
     if (world.gameMuted) {
         currentState = false;
@@ -28,6 +44,15 @@ function mutePage(){
         currentState = true;
         document.getElementById('mute-page').src = "img/10_other/mute.png";
     }
+   switchTheAudabilityOfAllSounds(currentState)
+}
+
+/**
+ * This function gives all sounds the current audio settings 
+ * 
+ * @param {*} currentState - This is the current audio setting and switches between true(muted) and false(unmuted)
+ */
+function switchTheAudabilityOfAllSounds(currentState){
     world.endboss_hurt_sound.muted = currentState;
     world.collect_coin_sound.muted = currentState;
     world.collect_bottle_sound.muted = currentState;
@@ -41,18 +66,34 @@ function mutePage(){
     world.gameMuted = currentState;
 }
 
+/**
+ * This function shows a new window with game explanations 
+ * 
+ */
 function openHowToPlay(){
     document.getElementById('how-to-play').classList.remove('d-none')
 }
 
+/**
+ * This function closes the window with the game explanations
+ * 
+ */
 function closeHowToPlay(){
     document.getElementById('how-to-play').classList.add('d-none')
 }
 
+/**
+ * This function opens the canvas in fullscreen
+ * 
+ */
 function changeToFullscreen(){
     canvas.requestFullscreen();
 }
 
+/**
+ * This function gives mobile buttons the value of keys, to play the game without a keyboard.
+ * 
+ */
 function pressMobileButtons(){
     document.getElementById('arrow-left').addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -89,7 +130,10 @@ function pressMobileButtons(){
 
 }
 
-//wenn Taste gedrückt wird --> Variable auf Right geändert
+/**
+ * This function converts boleand variables true, by pressing a key
+ * 
+ */
 window.addEventListener('keydown', (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = true;
@@ -111,6 +155,10 @@ window.addEventListener('keydown', (e) => {
     };
 });
 
+/**
+ * This function converts boleand variables false, by releasing a key
+ * 
+ */
 window.addEventListener('keyup', (e) => {
     if (e.keyCode== 39) {
         keyboard.RIGHT = false;

@@ -1,5 +1,6 @@
 class HealthBar extends StatusBar {
     y = -10;
+    percentage = 100;
     
     IMAGES = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png',
@@ -10,20 +11,28 @@ class HealthBar extends StatusBar {
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png',
     ];
 
-    percentage = 100;
-
     constructor(){
         super();
         this.loadImages(this.IMAGES);
         this.setPercentage(100);
     }
 
-     //setPercentage wird mit parameter aufgerufen und parameter wird der neue percentage Wert
+     /**
+      * This function shows the matching image of the status bar according to energy level of the endboss
+      * 
+      * @param {*} percentage - value between 0 - 5, which shows the remaining enegery of the endboss 
+      */
     setPercentage(percentage) {
-        this.percentage = percentage; //Zahl zwischen 0 ... 5 ermitteln, damit nur eines der Bilder angezeigt wird
+        this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()]
         this.img = this.imageCache[path];
     }
+
+    /**
+     * This function is used to convert the energy level into a number between 0 and 5
+     * 
+     * @returns - according to the energy level a number between 0 and 5
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;
@@ -38,6 +47,5 @@ class HealthBar extends StatusBar {
         } else {
             return 0;
         }
-
     }
 }

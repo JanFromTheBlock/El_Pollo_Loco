@@ -18,12 +18,22 @@ percentage = 100
         this.setPercentage(100);
     }
 
-     //setPercentage wird mit parameter aufgerufen und parameter wird der neue percentage Wert
+     /**
+      * This function shows the matching image of the status bar according to energy level of the endboss
+      * 
+      * @param {number} percentage - value between 0 - 5, which shows the remaining enegery of the endboss 
+      */
     setPercentage(percentage) {
-        this.percentage = percentage; //Zahl zwischen 0 ... 5 ermitteln, damit nur eines der Bilder angezeigt wird
+        this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()]
         this.img = this.imageCache[path];
     }
+
+    /**
+     * This function is used to convert the energy level into a number between 0 and 5
+     * 
+     * @returns - according to the energy level a number between 0 and 5
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;
@@ -38,15 +48,17 @@ percentage = 100
         } else {
             return 0;
         }
-
     }
 
+    /**
+     * This function reduces the energy of the endboss by 34 and sets a new time for the last Hit
+     * 
+     */
     hit(){
         this.percentage -= 34;
         if(this.percentage < 0){
             this.percentage = 0;
         }else{
-            //Zeit wird in Zahlen gespeichert in ms seit 1.1.1970
             this.lastHit = new Date().getTime();
         }
     }

@@ -5,7 +5,15 @@ class Character extends MovableObject {
     offsetx = 20;
     offsety = 120;
     offsetWidth = -20 
-
+    world;
+    walking_sound = new Audio('audio/running.mp3')
+    character_hurt_sound = new Audio('audio/character_hurt.mp3');
+    character_died_sound = new Audio('audio/character_died.mp3')
+    jumping_sound = new Audio('audio/jump.mp3');
+    jumpingSoundAlreadyPlayed = false;
+    characterDied = false;
+    lastAction;
+    characterIsLanding = false;
 
     IMAGES_SLEEPING = [
         'img/2_character_pepe/1_idle/long_idle/I-11.png',
@@ -65,16 +73,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-42.png',
         'img/2_character_pepe/4_hurt/H-43.png',
     ];
-    world;
-    walking_sound = new Audio('audio/running.mp3')
-    character_hurt_sound = new Audio('audio/character_hurt.mp3');
-    character_died_sound = new Audio('audio/character_died.mp3')
-    jumping_sound = new Audio('audio/jump.mp3');
-    jumpingSoundAlreadyPlayed = false;
-    characterDied = false;
-    lastAction;
-    characterIsLanding = false;
-
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -87,16 +85,28 @@ class Character extends MovableObject {
         this.applyGravity();
     }
 
+    /**
+     * This function sets the intervals for moving the character
+     * 
+     */
     animate() {
         this.world.setStoppableInterval(this.moveCharacter.bind(this), 1000 / 60);
         this.world.setStoppableInterval(this.animateCharacter.bind(this), 150);
     }
 
+    /**
+     * This function pauses the walkinng-sound and check the situation of the character to load the correct Images and sounds
+     * 
+     */
     animateCharacter() {
         this.pauseSounds();
         this.checkSituationOfTheCharacterToAnimate();
     }
 
+    /**
+     * This function is used to find out the current state of the character to play the right animations
+     * 
+     */
     checkSituationOfTheCharacterToAnimate() {
         if (this.isDead()) {
             this.characterisDying();
@@ -121,41 +131,68 @@ class Character extends MovableObject {
         }
     }
 
+   /**
+    * This function is used to check the duration sindce the last action of the character
+    * 
+    * @returns - if the character hasn't performed any action for more than 2 seconds
+    */
     timeSinceLastAction(){
         let timepassed = new Date().getTime() - this.lastAction;
         timepassed = timepassed / 1000;
-        return timepassed > 2; // wenn Zeitpunkt des letzten Hits weniger als eine Skeunde zurückliegt, dann wird True ausgegeben
+        return timepassed > 2;
     }
 
+    /**
+     * This function sets the time of the last action of the character
+     * 
+     */
     timeOfLastAction(){
         this.lastAction = new Date().getTime();
     }
+
+    /**
+     * This function animates the sleeping character
+     * 
+     */
     characterIsSleeping() {
         this.playAnimation(this.IMAGES_SLEEPING);
     }
 
+    /**
+     * This function animates the waiting character
+     * 
+     */
     characterIsWaiting() {
         this.playAnimation(this.IMAGES_WAITING);
     }
 
+    /**
+     *  * This function animates the walking character
+     * 
+     */
     characterIsWalking() {
         this.playAnimation(this.IMAGES_WALKING);
-        //walking-musik wird abgespielt
         this.walking_sound.play();
     }
 
+    /**
+     *  * This function animates the hurt character
+     * 
+     */
     characterIsHurt() {
-        this.playAnimation(this.IMAGES_HURT); //wenn is Hurt true ist, wird Velretze Bilder angezeigt
-
+        this.playAnimation(this.IMAGES_HURT); 
         if (this.character_hurt_sound.play !== undefined) {
             this.character_hurt_sound.play();
         }
         this.character_hurt_sound.play();
-
     }
 
+    /**
+     *  * This function animates the jumping character
+     * 
+     */
     characterIsJumping() {
-        this.playAnimation(this.IMAGES_JUMPING);  //wenn Pepe in der Luft ist wird Jumping Animation angezeigt
+        this.playAnimation(this.IMAGES_JUMPING);
         this.characterIsLanding = true;
         if (!this.jumpingSoundAlreadyPlayed) {
             if (this.jumping_sound.play !== undefined) {
@@ -170,6 +207,10 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     *  * This function let the character die and triggers the termination of the game
+     * 
+     */
     characterisDying() {
         this.playAnimation(this.IMAGES_DEAD);
         this.character_died_sound.play();
@@ -177,35 +218,46 @@ class Character extends MovableObject {
         this.world.stopGame();
     }
 
+    /**
+     * This function stops the walking sounds
+     * 
+     */
     pauseSounds() {
-        //walking-musik wird kurz pausiert und läuft nur weiter wenn die Tasten wieterhin gedrückt werdne
         this.walking_sound.pause();
-
     }
 
+    /**
+     * This function is used to move the character left, right and up
+     * 
+     */
     moveCharacter() {
         if (this.world) {
-            //Geschwindigkeiten für rechts und links laufen wird animiert
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveCharacterRight();
             };
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveCharacterLeft();
             }
-            //wenn space-taste gedrückt wird und PEpe auf dem Boden ist, wird initial beschleunigt nach oben
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
             }
-            //kamera wird immer um die gleiche Pixelmenge wie der charakter bewegt aber in die andere Richtung und soll insgesamt immer 100pixel rechts vom charakter sein, damit dieser nicht direkt am Rand ist
             this.world.camera_x = -this.x + 100;
         }
     }
 
+    /**
+     * This function moves the character to the right
+     * 
+     */
     moveCharacterRight() {
         this.moveRight();
         this.otherDirection = false;
     }
 
+    /**
+     * This function moves the character to the left
+     * 
+     */
     moveCharacterLeft() {
         this.moveLeft();
         this.otherDirection = true;

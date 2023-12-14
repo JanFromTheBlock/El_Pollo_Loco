@@ -1,6 +1,7 @@
 class CoinBar extends StatusBar {
     y = 90;
     collectedCoins = 0;
+
     IMAGES = [
         'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png',
         'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/20.png',
@@ -15,5 +16,4 @@ class CoinBar extends StatusBar {
         this.loadImages(this.IMAGES);
         this.setAmountOfObjects(this.collectedCoins);
     }
-
 }

@@ -172,11 +172,21 @@ class World {
      * @param {number} index - number of the enemy in the array that should die
      */
     chickenDies(index) {
-        this.level.enemies[index].enemy_dead = true;
-        this.level.enemies[index].chickenIsDying = true;
-        setTimeout(() => {
-            this.level.enemies.splice(index, 1);
-        }, 400);
+        if (!this.level.enemies[index].chickenIsDying) {
+            this.level.enemies[index].enemy_dead = true;
+            this.level.enemies[index].chickenIsDying = true;
+            setTimeout(() => {
+                if (index < this.level.enemies.length && this.level.enemies[index].chickenIsDying) {
+                    this.level.enemies.splice(index, 1);
+                }else{
+                    for (let position = 0; position < this.level.enemies.length; position++) {
+                        if (this.level.enemies[position].chickenIsDying) {
+                            this.level.enemies.splice(position, 1);
+                        }                        
+                    }
+                }
+            }, 400);
+        }
     }
 
     /**

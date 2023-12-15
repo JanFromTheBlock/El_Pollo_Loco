@@ -1,3 +1,8 @@
+/**
+ * class representing the main character
+ * 
+ * @extends MovableObject
+ */
 class Character extends MovableObject {
     height = 280;
     y = 155;
@@ -74,6 +79,10 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-43.png',
     ];
 
+    /**
+     * creating the main character
+     * 
+     */
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);

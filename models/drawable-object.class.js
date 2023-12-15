@@ -1,3 +1,7 @@
+/**
+ * class representing all Drawable Objects in the game
+ * 
+ */
 class DrawableObject {
     x = 120;
     y = 280;

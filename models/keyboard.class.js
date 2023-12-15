@@ -1,3 +1,7 @@
+/**
+ * class representing the keyboard
+ * 
+ */
 class Keyboard {
     LEFT = false;
     RIGHT = false;

@@ -1,8 +1,17 @@
+/**
+ * class representing all the status bars of the game
+ * 
+ * @extends DrawableObject
+ */
 class StatusBar extends DrawableObject {
     x = 20;
     width = 200;
     height = 60;
 
+    /**
+     * creating the status bars
+     * 
+     */
     constructor() {
         super();
     }  

@@ -1,3 +1,8 @@
+/**
+ * class representing the endboss
+ * 
+ * @extends MovableObject
+ */
 class Endboss extends MovableObject {
     endbossHurt = false;
     endbossRun = false;
@@ -40,6 +45,10 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
 
+    /**
+     * creating the endboss
+     * 
+     */
     constructor() {
         super().loadImage(this.IMAGES_STANDING[0]);
         this.loadImages(this.IMAGES_STANDING);

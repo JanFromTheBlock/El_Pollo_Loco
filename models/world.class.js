@@ -1,3 +1,7 @@
+/**
+ * class representing the world where the game takes place
+ * 
+ */
 class World {
     character = new Character();
     loseGame = new GameOver()
@@ -25,6 +29,12 @@ class World {
     gameMuted = false;
     indexOfEndboss;
 
+    /**
+     * creating the world
+     * 
+     * @param {CanvasRenderingContext2D} canvas - canvas where all the animation where drawn
+     * @param {object} keyboard - keyboard where the key commands where detected
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;

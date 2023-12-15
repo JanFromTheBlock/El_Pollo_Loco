@@ -1,3 +1,8 @@
+/**
+ * class representing the status bar for the amount of bottles the character collected
+ * 
+ * @extends StatusBar
+ */
 class BottleBar extends StatusBar {
     y = 40;
     collectedBottles = 0;
@@ -11,6 +16,9 @@ class BottleBar extends StatusBar {
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/green/100.png',
     ];
 
+    /**
+     * creating the BottleBar
+     */
     constructor(){
         super();
         this.loadImages(this.IMAGES);

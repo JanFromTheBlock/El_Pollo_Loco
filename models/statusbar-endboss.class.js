@@ -1,3 +1,8 @@
+/**
+ * class representing the status bar for the energy of the endboss
+ * 
+ * @extends StatusBar
+ */
 class EndbossBar extends StatusBar {
     y = 40;
     x = 500;
@@ -12,6 +17,10 @@ percentage = 100
         'img/7_statusbars/1_statusbar/2_statusbar_health/orange/100.png',
     ]
 
+    /**
+     * creating the EndbossBar
+     * 
+     */
     constructor(){
         super();
         this.loadImages(this.IMAGES);

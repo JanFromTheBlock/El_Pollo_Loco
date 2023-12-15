@@ -1,3 +1,8 @@
+/**
+ * class representing the status bar for the amount of collected coins
+ * 
+ * @extends StatusBar
+ */
 class CoinBar extends StatusBar {
     y = 90;
     collectedCoins = 0;
@@ -11,6 +16,10 @@ class CoinBar extends StatusBar {
         'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/100.png',
     ];
 
+    /**
+     * creating the CoinBar
+     * 
+     */
     constructor(){
         super();
         this.loadImages(this.IMAGES);

@@ -1,3 +1,8 @@
+/**
+ * class representing the status bar for the power of the main character
+ * 
+ * @extends StatusBar
+ */
 class HealthBar extends StatusBar {
     y = -10;
     percentage = 100;
@@ -11,6 +16,10 @@ class HealthBar extends StatusBar {
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png',
     ];
 
+    /**
+     * creating the statusbar health of the main character
+     * 
+     */
     constructor(){
         super();
         this.loadImages(this.IMAGES);

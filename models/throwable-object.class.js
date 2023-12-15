@@ -1,3 +1,8 @@
+/**
+ * class representing the throwable bottles
+ * 
+ * @extends MovableObject
+ */
 class ThrowableObject extends MovableObject {
     collision = false;
     alreadyHit = false;
@@ -19,6 +24,12 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png',
     ];
 
+    /**
+     * creating a throwable bottle
+     * 
+     * @param {number} x - x-coordinate of the throwable bottle
+     * @param {number} y - y-coordinate of the throwable bottle
+     */
     constructor(x, y) {
         super().loadImage(this.IMAGES_THROWING[0]);
         this.loadImages(this.IMAGES_THROWING);

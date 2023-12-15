@@ -140,16 +140,18 @@ class World {
     checkCollisionsWithThrownBottles(array) {
         array.forEach((o, index) => {
             let i = array.indexOf(o);
-            if (this.level.enemies[index].isColliding(o) || o.y > 335) {
-                this.bottleSplashes(array, i);
-                if (this.level.enemies[this.indexOfEndboss].isColliding(o)) {
-                    this.endbossIsGettingHurt();
-                    if (!this.throwableObjects[i].alreadyHit) {
-                        this.reduceEndbossHealthBar(i, this.indexOfEndboss);
+            for (let enemy = 0; enemy < this.level.enemies.length; enemy++) {
+                if (this.level.enemies[enemy].isColliding(o) || o.y > 335) {
+                    this.bottleSplashes(array, i);
+                    if (this.level.enemies[this.indexOfEndboss].isColliding(o)) {
+                        this.endbossIsGettingHurt();
+                        if (!this.throwableObjects[i].alreadyHit) {
+                            this.reduceEndbossHealthBar(i, this.indexOfEndboss);
+                        }
+                    } else if (this.level.enemies[enemy].isColliding(o)) {
+                        this.chickenDies(enemy)
                     }
-                } else if (this.level.enemies[index].isColliding(o)) {
-                    this.chickenDies(index)
-                }
+                }                
             }
         })
     }

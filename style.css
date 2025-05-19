@@ -295,6 +295,12 @@ button{
     }
 }
 
+@media only screen and (max-height: 635px){
+    h1{
+        display: none;
+    }
+}
+
 @media only screen and (max-height: 480px){
     canvas{
         height: 100vh;
@@ -324,5 +330,30 @@ button{
     }
     #how-to-play-title{
         text-underline-offset: 5px;
+    }
+
+    #full-screen{
+        display: none;
+    }
+}
+
+@media only screen and (max-height: 480px) and (max-width: 720px){
+    .overlay{
+        margin-top: -118vh;
+    }
+    #buttons{
+        top: -35%;
+    }
+
+    #restart-game{
+        top: -30%;
+    }
+
+    #close-panel {
+        margin-top: 90px;
+    }
+
+    #panel1{
+        margin: 80px 12px;
     }
 }
